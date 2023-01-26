@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/Desktop/Unity Assets/Unity Assets/Scripts/Grabber.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Unity Projects/Jelly/Assets/_Scripts/EnemyJellyController.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -81,7 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1674725627506</updated>
       <workItem from="1674725631429" duration="127000" />
-      <workItem from="1674725883318" duration="2403000" />
+      <workItem from="1674725883318" duration="23979000" />
     </task>
     <servers />
   </component>

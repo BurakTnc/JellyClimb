@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - FxTemporaire
+  - Jelly
+  - EnemyJelly
   layers:
   - Default
   - TransparentFX

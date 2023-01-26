@@ -1,22 +1,65 @@
+using System;
+using _YabuGames.Scripts.Interfaces;
+using _YabuGames.Scripts.Managers;
+using _YabuGames.Scripts.Signals;
 using DG.Tweening;
+using JellyCube;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _YabuGames.Scripts.Controllers
 {
-    public class JellyController : MonoBehaviour
+    public class JellyController : MonoBehaviour,IInteractable
     {
-     [SerializeField] private float coolDown;
+        [SerializeField] private float coolDown;
+        [SerializeField] private Vector3 growingSize;
+        [SerializeField] private int maxLevel = 10;
+        [SerializeField] private Transform splashPosition, groundSplashPosition;
         
-        private bool _onMove = false;
-        private bool _onMerge = false;
+        private bool _onMove;
+        private bool _onMerge;
+        private bool _ableToDrag;
         private Transform _transform;
-        private float _timer = 0;
+        private float _timer;
         private Transform _mesh;
+        private int _level = 1;
+        private Vector3 _currentScale;
+        private Vector3 _oldPosition;
+        private Vector3 _particlePosition;
+        private RubberEffect _rubberEffect;
+        private CollisionController _collisionController;
+        private float _heightValue;
+        
+        
         private void Awake()
         {
-            _transform = transform;
-            _mesh = _transform.GetChild(0);
+            SetVariables();
         }
+
+        #region Subscribtions
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+
+        private void OnDisable()
+        {
+            UnSubscribe();
+        }
+        
+        private void Subscribe()
+        {
+            JellySignals.Instance.OnDragStart += StopMoving;
+            JellySignals.Instance.OnDragEnd += BeginMoving;
+        }
+
+        private void UnSubscribe()
+        {
+            JellySignals.Instance.OnDragStart += StopMoving;
+            JellySignals.Instance.OnDragEnd += BeginMoving;
+        }
+        #endregion
+
         private void Start()
         {
         
@@ -26,10 +69,31 @@ namespace _YabuGames.Scripts.Controllers
         {
             CheckInput();
         }
-
-        public Vector3 GetScale()
+        
+        private void SetVariables()
         {
-            return _transform.localScale;
+            _transform = transform;
+            _mesh = _transform.GetChild(0);
+            _timer += (coolDown + Random.Range(0.1f, 1f));
+            _rubberEffect = GetComponentInChildren<RubberEffect>();
+            _currentScale = _transform.localScale;
+            _collisionController = GetComponent<CollisionController>();
+        }
+        
+        private void GetVariables()
+        {
+            
+        }
+
+        private void StopMoving()
+        {
+            _rubberEffect.m_EffectIntensity = .5f;
+            _onMerge = true;
+        }
+
+        private void BeginMoving()
+        {
+            transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
         }
 
         private void CheckInput()
@@ -44,47 +108,52 @@ namespace _YabuGames.Scripts.Controllers
             _timer = Mathf.Clamp(_timer,0,2);
         }
 
-        private void MergeProcess(Vector3 scale)
+        public void Merge(int takenLevel)
         {
-            Sequence seq = DOTween.Sequence();
+            if (_level >= maxLevel)  return;
+            _ableToDrag = false;
+            var seq = DOTween.Sequence();
             _onMerge = true;
-            var mergedScale = _transform.localScale + scale;
-            var effectScale = new Vector3(mergedScale.x, mergedScale.y * 1.5f, mergedScale.z * 1.5f);
-            seq.Append(_transform.DOScale(effectScale, .5f).SetEase(Ease.OutBack));
+            _level += takenLevel;
+            _heightValue += growingSize.x * takenLevel;
+            var mergedScale = _currentScale + (growingSize * takenLevel);
+            var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y, mergedScale.z);
+            _currentScale = mergedScale;
+            //seq.Append(_transform.DOScale(effectScale, .5f).SetEase(Ease.InSine));
             seq.Append(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutSine).SetDelay(.2f)
                 .OnComplete(MergeDone));
             
-            
-            
-            
-           // _transform.DOScale(effectScale, .2f).SetEase(Ease.OutBack).OnComplete(() => MergeDone());
-
-
-        }
-
-        private void MergeEffect(Vector3 mergedScale)
-        {
-            Debug.Log(mergedScale);
-            _transform.DOScale(mergedScale, .2f).SetEase(Ease.InBack)
-                .OnComplete(MergeDone).SetDelay(.2f);
         }
 
         private void MergeDone()
         {
+            _collisionController.AllowEnemyMerging();
+            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            JellySignals.Instance.OnAbleToMerge?.Invoke();
+            _transform.position += Vector3.up * _heightValue;
             _timer += .5f;
             _onMerge = false;
+            _ableToDrag = true;
+            _rubberEffect.m_EffectIntensity = 1f;
+        }
+
+        private void PullParticles()
+        {
+            PoolManager.Instance.GetSplashParticle(splashPosition.position);
+            PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
         }
 
         private void Climb()
         {
             _onMove = true;
+            _ableToDrag = false;
             _timer += coolDown;
+            
             var currentScale = _transform.localScale;
             var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
-            var desiredPosition = new Vector3(0, 1,2);
-            
-            
-            _transform.DOMove(desiredPosition, .5f, false).SetRelative(true)
+            var desiredPosition = new Vector3(0, 1, 2);
+
+            _transform.DOMove(desiredPosition, .5f).SetRelative(true)
                 .SetEase(Ease.InSine);
             _mesh.DOLocalRotate(new Vector3(90, 0, 0), .4f,RotateMode.WorldAxisAdd).SetRelative(true)
                 .SetEase(Ease.InSine).OnComplete(OnClimbFinish);
@@ -95,26 +164,54 @@ namespace _YabuGames.Scripts.Controllers
 
         private void OnClimbFinish()
         {
-            var currentScale = _transform.localScale;
-            var desiredScale = new Vector3(currentScale.x / 1.1f, currentScale.y*1.1f, currentScale.z*1.1f);
+            _particlePosition = _transform.position;
+            PullParticles();
+            var scale = _transform.localScale;
+            var desiredScale = new Vector3(scale.x / 1.1f, scale.y*1.1f, scale.z*1.1f);
             _transform.DOScale(desiredScale, .25f).SetEase(Ease.InSine).OnComplete(EnableMovement);
 
         }
 
         private void EnableMovement()
         {
+            _oldPosition = _transform.position;
             _onMove = false;
+            _ableToDrag = true;
+        }
+        
+        private void Disappear()
+        {
+            Destroy(gameObject);
         }
 
-        private void OnTriggerEnter(Collider other)
+        #region Public Methods
+        
+        public void DragEffect()
         {
-            if (other.CompareTag("Finish"))
-            {
-                var script = other.GetComponent<EnemyJellyController>();
-                MergeProcess(script.GetScale());
-                script.Merge();
-                
-            }
+            _transform.DOScale(_currentScale * 1.3f, .5f).SetEase(Ease.OutBack);
         }
+
+        public void FinishDragEffect()
+        {
+            _transform.DOScale(_currentScale, .4f).SetEase(Ease.OutBack);
+        }
+        public void BlockDragging()
+        {
+            _ableToDrag = false;
+        }
+        public void TempMerge()
+        {
+            _transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(Disappear);
+        }
+        public int GetLevel()
+        {
+            return _level;
+        }
+
+        public bool CanDrag()
+        {
+            return _ableToDrag;
+        }
+        #endregion
     }
 }

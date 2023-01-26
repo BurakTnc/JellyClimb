@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _YabuGames.Scripts.Managers
 {
@@ -7,10 +8,11 @@ namespace _YabuGames.Scripts.Managers
     {
         public static PoolManager Instance;
         
+    [FormerlySerializedAs("firstParticle")]
     [Header("                               // Set Particles Stop Action To DISABLE //")]
     [Space(20)]
-        [SerializeField] private List<GameObject> firstParticle = new List<GameObject>();
-        [SerializeField] private List<GameObject> secondParticle = new List<GameObject>();
+        [SerializeField] private List<GameObject> splashParticle = new List<GameObject>();
+        [SerializeField] private List<GameObject> groundSplashParticle = new List<GameObject>();
         [SerializeField] private List<GameObject> thirdParticle = new List<GameObject>();
         [SerializeField] private List<GameObject> fourthParticle = new List<GameObject>();
 
@@ -30,22 +32,22 @@ namespace _YabuGames.Scripts.Managers
             
         }
 
-        public void GetFirstParticle(Vector3 desiredPos)
+        public void GetSplashParticle(Vector3 desiredPos)
         {
-            var temp = firstParticle[0];
-            firstParticle.Remove(temp);
+            var temp = splashParticle[0];
+            splashParticle.Remove(temp);
             temp.transform.position = desiredPos;
             temp.SetActive(true);
-            firstParticle.Add(temp);
+            splashParticle.Add(temp);
             
         }
-        public void GetSecondParticle(Vector3 desiredPos)
+        public void GetGroundSplashParticle(Vector3 desiredPos)
         {
-            var temp = secondParticle[0];
-            secondParticle.Remove(temp);
+            var temp = groundSplashParticle[0];
+            groundSplashParticle.Remove(temp);
             temp.transform.position = desiredPos;
             temp.SetActive(true);
-            secondParticle.Add(temp);
+            groundSplashParticle.Add(temp);
         }
         public void GetThirdParticle(Vector3 desiredPos)
         {
