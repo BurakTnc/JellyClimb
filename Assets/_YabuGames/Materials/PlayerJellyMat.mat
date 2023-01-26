@@ -11,10 +11,9 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: edd7abf643fa4bc4e8561d4c280c97cf, type: 3}
   m_ValidKeywords:
   - TCP2_MOBILE
-  - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING
-  - TCP2_SPECULAR_STYLIZED
   m_InvalidKeywords:
+  - TCP2_OUTLINE_CONST_SIZE
   - TCP2_UV_NORMALS_FULL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -93,13 +92,13 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.805
     - _DetailNormalMapScale: 1
     - _DirectIntensityOutline: 1
     - _DstBlend: 0
     - _EmissionChannel: 4
-    - _FresnelMax: 1.5
-    - _FresnelMin: 0
+    - _FresnelMax: 0
+    - _FresnelMin: 0.96
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -117,38 +116,38 @@ Material:
     - _OutlineLightingTypeURP: 0
     - _OutlineMaxWidth: 1
     - _OutlineMinWidth: 1
-    - _OutlinePixelSizeType: 0
+    - _OutlinePixelSizeType: 1
     - _OutlineTextureLOD: 5
     - _OutlineTextureType: 0
-    - _OutlineWidth: 1
+    - _OutlineWidth: 2
     - _Parallax: 0.02
     - _RampBands: 4
     - _RampBandsSmoothing: 0.1
     - _RampOffset: 0
     - _RampScale: 1
-    - _RampSmoothing: 1
-    - _RampThreshold: 0.939
+    - _RampSmoothing: 0.359
+    - _RampThreshold: 0.67
     - _RampType: 0
     - _ReceiveShadowsOff: 1
     - _ReflectionMapType: 0
-    - _ReflectionSmoothness: 0
+    - _ReflectionSmoothness: 0.707
     - _RenderingMode: 0
-    - _RimMax: 0.13
-    - _RimMin: 0.25
+    - _RimMax: 0
+    - _RimMin: 0.15
     - _ShadowColorLightAtten: 0
     - _SingleIndirectColor: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
-    - _SpecularRoughness: 1
-    - _SpecularToonSize: 0.189
-    - _SpecularToonSmoothness: 0
-    - _SpecularType: 1
+    - _SpecularRoughness: 0.354
+    - _SpecularToonSize: 0.001
+    - _SpecularToonSmoothness: 1
+    - _SpecularType: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseAlphaTest: 0
     - _UseEmission: 0
-    - _UseFresnelReflections: 1
+    - _UseFresnelReflections: 0
     - _UseMatCap: 0
     - _UseMatCapMask: 0
     - _UseMobileMode: 1
@@ -167,7 +166,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.45947933, g: 0.45947933, b: 0.45947933, a: 0.5}
     - _SColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
