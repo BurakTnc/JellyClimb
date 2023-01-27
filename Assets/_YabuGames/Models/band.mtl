@@ -1,0 +1,8 @@
+newmtl BandMat_1
+Kd 0.4622641 0.4622641 0.381586
+d 1
+
+newmtl BandMat
+Kd 1 1 1
+d 1
+

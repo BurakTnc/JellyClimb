@@ -1,0 +1,11 @@
+newmtl MMFollowTargetDemoGroundMaterial
+map_Kd MMProtoTextures_DarkGreySquares.png
+map_Pm MMPlasticAO.png
+bump MMPlasticNormal.png
+Kd 1 1 1
+d 1
+
+newmtl BandMat
+Kd 1 1 1
+d 1
+
