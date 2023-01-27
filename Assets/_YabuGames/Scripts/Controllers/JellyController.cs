@@ -3,6 +3,7 @@ using _YabuGames.Scripts.Interfaces;
 using _YabuGames.Scripts.Managers;
 using _YabuGames.Scripts.Signals;
 using DG.Tweening;
+using Dreamteck.Splines;
 using JellyCube;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,15 +26,15 @@ namespace _YabuGames.Scripts.Controllers
         private int _level = 1;
         private Vector3 _currentScale;
         private Vector3 _oldPosition;
-        private Vector3 _particlePosition;
         private RubberEffect _rubberEffect;
         private CollisionController _collisionController;
+        private GrabController _grabController;
         private float _heightValue;
-        
-        
+
+
         private void Awake()
         {
-            SetVariables();
+            GetVariables();
         }
 
         #region Subscribtions
@@ -70,18 +71,18 @@ namespace _YabuGames.Scripts.Controllers
             CheckInput();
         }
         
-        private void SetVariables()
+        private void GetVariables()
         {
             _transform = transform;
-            // _meshParent = _transform.GetChild(0);
-            // _mesh=_transform.GetChild(0).GetChild(0);
             _timer += (coolDown + Random.Range(0.1f, 1f));
             _rubberEffect = GetComponentInChildren<RubberEffect>();
             _currentScale = meshParent.localScale;
             _collisionController = GetComponent<CollisionController>();
+            _grabController = GetComponent<GrabController>();
+            _oldPosition = transform.position;
         }
         
-        private void GetVariables()
+        private void SetVariables()
         {
             
         }
@@ -89,13 +90,13 @@ namespace _YabuGames.Scripts.Controllers
         private void StopMoving()
         {
             _onMove = true;
-            _rubberEffect.m_EffectIntensity = .5f;
+            _rubberEffect.m_EffectIntensity = .6f;
             _onMerge = true;
         }
 
         private void BeginMoving()
         {
-            transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
+            _transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
         }
 
         private void CheckInput()
@@ -121,11 +122,9 @@ namespace _YabuGames.Scripts.Controllers
             var mergedScale = _currentScale + (growingSize * takenLevel);
             var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
             _currentScale = mergedScale;
-            seq.Append(meshParent.DOScale(effectScale, .5f).SetEase(Ease.OutBack));
-            seq.Append(meshParent.DOScale(_currentScale, .5f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
-            seq.Join(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
-            // seq.Append(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutSine).SetDelay(.2f)
-            //     .OnComplete(MergeDone));
+            seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
+            seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
+            seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
 
         }
 
@@ -146,8 +145,6 @@ namespace _YabuGames.Scripts.Controllers
             seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
             seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
             
-            // seq.Join(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutBack)
-            //     .OnComplete(MergeDone));
         }
 
         private void MergeDone()
@@ -155,8 +152,6 @@ namespace _YabuGames.Scripts.Controllers
             _collisionController.AllowEnemyMerging();
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
             JellySignals.Instance.OnAbleToMerge?.Invoke();
-            
-            //_transform.position += Vector3.up * _heightValue;
             _timer += .5f;
             _onMerge = false;
             _ableToDrag = true;
@@ -191,7 +186,6 @@ namespace _YabuGames.Scripts.Controllers
 
         private void OnClimbFinish()
         {
-            _particlePosition = _transform.position;
             PullParticles();
             var scale = _transform.localScale;
             var desiredScale = new Vector3(scale.x / 1.1f, scale.y*1.1f, scale.z*1.1f);
@@ -212,10 +206,21 @@ namespace _YabuGames.Scripts.Controllers
         }
 
         #region Public Methods
-        
+        public void SetOnBand(SplineComputer spline)
+        {
+            _onMove = false;
+            _grabController.enabled = true;
+        }
+
+        public void SetOffBand()
+        {
+            _onMove = true;
+            _grabController.enabled = false;
+        }
         public void DragEffect()
         {
-            _transform.DOScale(_currentScale * 1.3f, .5f).SetEase(Ease.OutBack);
+            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+           // _transform.DOScale(_currentScale * 1.3f, .5f).SetEase(Ease.OutBack);
         }
 
         public void FinishDragEffect()
@@ -229,7 +234,6 @@ namespace _YabuGames.Scripts.Controllers
         public void TempMerge()
         {
             Destroy(gameObject);
-            //_transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(Disappear);
         }
         public int GetLevel()
         {

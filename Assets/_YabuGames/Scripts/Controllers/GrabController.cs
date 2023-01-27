@@ -45,7 +45,6 @@ namespace _YabuGames.Scripts.Controllers
         private void OnMouseDown()
         {
             if(_isGrabbing) return;
-            Debug.Log("grabbed");
             CoreGameSignals.Instance.OnDragging?.Invoke(true);
             _collisionController.BlockAllyMerging();
             _collisionController.BlockEnemyMerging();
