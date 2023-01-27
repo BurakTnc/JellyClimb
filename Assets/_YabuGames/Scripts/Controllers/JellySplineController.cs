@@ -4,35 +4,34 @@ using UnityEngine;
 
 namespace _YabuGames.Scripts.Controllers
 {
+    [RequireComponent(typeof(SplineFollower))]
     public class JellySplineController: MonoBehaviour
     {
         public static JellySplineController Instance;
         
-        private SplineComputer _splineComputer;
+        private SplineFollower _splineFollower;
         private JellyController _jellyController;
 
         private void Awake()
         {
-            _splineComputer = GetComponent<SplineComputer>();
+            _splineFollower = GetComponent<SplineFollower>();
             _jellyController = GetComponent<JellyController>();
         }
-
-        private void Singleton()
-        {
-            if (Instance != this && Instance != null) ;
-            {
-                
-            }
-        }
         
-        public void SetOnBand()
+        
+        public void SetOnBand(SplineComputer spline)
         {
-            _jellyController.SetOnBand(_splineComputer);
+            _splineFollower.spline = spline;
+            _jellyController.SetOnBand();
+            _splineFollower.follow = true;
+            _splineFollower.enabled = true;
         }
 
         public void SetOffBand()
         {
-            _splineComputer = null;
+            _splineFollower.follow = false;
+            _splineFollower.enabled = false;
+            _splineFollower = null;
             _jellyController.SetOffBand();
         }
     }

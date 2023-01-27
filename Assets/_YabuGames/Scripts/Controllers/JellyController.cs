@@ -29,7 +29,9 @@ namespace _YabuGames.Scripts.Controllers
         private RubberEffect _rubberEffect;
         private CollisionController _collisionController;
         private GrabController _grabController;
+        private JellySplineController _jellySplineController;
         private float _heightValue;
+        private int _stepCount = 0;
 
 
         private void Awake()
@@ -79,6 +81,7 @@ namespace _YabuGames.Scripts.Controllers
             _currentScale = meshParent.localScale;
             _collisionController = GetComponent<CollisionController>();
             _grabController = GetComponent<GrabController>();
+            _jellySplineController = GetComponent<JellySplineController>();
             _oldPosition = transform.position;
         }
         
@@ -167,9 +170,16 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Climb()
         {
+            if (_stepCount==5)
+            {
+                BandController.Instance.GetBand(_jellySplineController);
+                return;
+            }
+            
             _onMove = true;
             _ableToDrag = false;
             _timer += coolDown;
+            _stepCount++;
             
             var currentScale = _transform.localScale;
             var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
@@ -206,16 +216,18 @@ namespace _YabuGames.Scripts.Controllers
         }
 
         #region Public Methods
-        public void SetOnBand(SplineComputer spline)
+        
+        public void SetOnBand()
         {
             _onMove = false;
-            _grabController.enabled = true;
+            _grabController.enabled = false;
         }
 
         public void SetOffBand()
         {
+            _stepCount = 0;
             _onMove = true;
-            _grabController.enabled = false;
+            _grabController.enabled = true;
         }
         public void DragEffect()
         {

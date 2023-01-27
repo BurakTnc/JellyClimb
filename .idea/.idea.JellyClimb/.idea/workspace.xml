@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/BandController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/BandController.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellySplineController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellySplineController.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/Examples.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/PlaymakerActions.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/TMPro.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/JMO Assets/Toony Colors Pro/Demo TCP2/Cat Demo URP.unitypackage.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandMat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/GrabController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/GrabController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/BandController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/BandController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellySplineController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellySplineController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +90,7 @@
       <updated>1674725627506</updated>
       <workItem from="1674725631429" duration="127000" />
       <workItem from="1674725883318" duration="23979000" />
-      <workItem from="1674807248867" duration="9949000" />
+      <workItem from="1674807248867" duration="12136000" />
     </task>
     <servers />
   </component>
