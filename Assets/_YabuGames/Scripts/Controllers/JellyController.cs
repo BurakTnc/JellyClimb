@@ -170,7 +170,8 @@ namespace _YabuGames.Scripts.Controllers
         private void PullParticles()
         {
             PoolManager.Instance.GetSplashParticle(splashPosition.position);
-            PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
+            if(_stepCount!=6)
+                  PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
         }
 
         private void GetOnBand()
@@ -243,6 +244,8 @@ namespace _YabuGames.Scripts.Controllers
 
         private void ResetClimb()
         {
+            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            _rubberEffect.m_EffectIntensity = 1;
             _timer = coolDown;
             _stepCount = 0;
             _onMove = false;
@@ -261,6 +264,7 @@ namespace _YabuGames.Scripts.Controllers
         {
             _onMove = true;
             _grabController.enabled = false;
+           // _rubberEffect.m_EffectIntensity = .1f;
         }
 
         public void SetOffBand()
