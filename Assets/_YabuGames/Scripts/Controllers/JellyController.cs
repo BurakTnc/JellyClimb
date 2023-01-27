@@ -254,6 +254,7 @@ namespace _YabuGames.Scripts.Controllers
         private void ResetPosition()
         {
             var scaleOffset = new Vector3(0, _heightValue, -_heightValue*2);
+            _oldPosition = _startGrid + scaleOffset;
             _transform.DORotate(_startRotation, .5f).SetEase(Ease.InSine);
             _transform.DOJump(_startGrid+scaleOffset, 3, 1, .5f).SetEase(Ease.InSine).OnComplete(ResetClimb);
         }
