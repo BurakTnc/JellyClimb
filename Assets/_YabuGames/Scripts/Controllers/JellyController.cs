@@ -26,6 +26,8 @@ namespace _YabuGames.Scripts.Controllers
         private int _level = 1;
         private Vector3 _currentScale;
         private Vector3 _oldPosition;
+        private Vector3 _startRotation;
+        private Vector3 _startGrid;
         private RubberEffect _rubberEffect;
         private CollisionController _collisionController;
         private GrabController _grabController;
@@ -82,7 +84,10 @@ namespace _YabuGames.Scripts.Controllers
             _collisionController = GetComponent<CollisionController>();
             _grabController = GetComponent<GrabController>();
             _jellySplineController = GetComponent<JellySplineController>();
-            _oldPosition = transform.position;
+            var position = _transform.position;
+            _oldPosition = position;
+            _startGrid = position;
+            _startRotation = _transform.rotation.eulerAngles;
         }
         
         private void SetVariables()
@@ -168,29 +173,45 @@ namespace _YabuGames.Scripts.Controllers
             PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
         }
 
+        private void GetOnBand()
+        {
+            BandController.Instance.GetBand(_jellySplineController);
+        }
+
         private void Climb()
         {
+            var currentScale = _transform.localScale;
+            var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
+            var climbPosition= new Vector3(0, 1, 2);
+            Vector3 desiredPosition;
+            var bandPosition = new Vector3(0, .2f, 1);
+            
+            if (_stepCount==6)
+            {
+                
+                return;
+            }
+
             if (_stepCount==5)
             {
-                BandController.Instance.GetBand(_jellySplineController);
-                return;
+                desiredPosition = bandPosition;
+            }
+            else
+            {
+                desiredPosition = climbPosition;
             }
             
             _onMove = true;
             _ableToDrag = false;
             _timer += coolDown;
             _stepCount++;
-            
-            var currentScale = _transform.localScale;
-            var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
-            var desiredPosition = new Vector3(0, 1, 2);
 
             _transform.DOMove(desiredPosition, .5f).SetRelative(true)
                 .SetEase(Ease.InSine);
             mesh.DOLocalRotate(new Vector3(90, 0, 0), .4f,RotateMode.WorldAxisAdd).SetRelative(true)
                 .SetEase(Ease.InSine).OnComplete(OnClimbFinish);
             
-            if(_onMerge) return;
+            if(_onMerge && _stepCount==5) return;
              _transform.DOScale(desiredScale, .25f).SetEase(Ease.InSine);
         }
 
@@ -205,6 +226,11 @@ namespace _YabuGames.Scripts.Controllers
 
         private void EnableMovement()
         {
+            if (_stepCount==6)
+            {
+                GetOnBand();
+                 return;
+            }
             _oldPosition = _transform.position;
             _onMove = false;
             _ableToDrag = true;
@@ -215,19 +241,31 @@ namespace _YabuGames.Scripts.Controllers
             Destroy(gameObject);
         }
 
+        private void ResetClimb()
+        {
+            _timer = coolDown;
+            _stepCount = 0;
+            _onMove = false;
+            _grabController.enabled = true;
+        }
+        private void ResetPosition()
+        {
+            var scaleOffset = new Vector3(0, _heightValue, -_heightValue*2);
+            _transform.DORotate(_startRotation, .5f).SetEase(Ease.InSine);
+            _transform.DOJump(_startGrid+scaleOffset, 3, 1, .5f).SetEase(Ease.InSine).OnComplete(ResetClimb);
+        }
+
         #region Public Methods
         
         public void SetOnBand()
         {
-            _onMove = false;
+            _onMove = true;
             _grabController.enabled = false;
         }
 
         public void SetOffBand()
         {
-            _stepCount = 0;
-            _onMove = true;
-            _grabController.enabled = true;
+            Invoke(nameof(ResetPosition),.1f);
         }
         public void DragEffect()
         {
