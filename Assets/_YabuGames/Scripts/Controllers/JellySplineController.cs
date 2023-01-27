@@ -31,7 +31,7 @@ namespace _YabuGames.Scripts.Controllers
         {
             _splineFollower.follow = false;
             _splineFollower.enabled = false;
-            _splineFollower = null;
+            _splineFollower.spline = null;
             _jellyController.SetOffBand();
         }
     }
