@@ -34,7 +34,7 @@ namespace _YabuGames.Scripts.Controllers
             _splineFollower.buildOnAwake = true;
             _splineFollower.buildOnEnable = true;
             _splineFollower.autoStartPosition = true;
-            _splineFollower.motion.offset = new Vector2(-.35f, .85f);
+            _splineFollower.motion.offset = new Vector2(0, .85f);
             _splineFollower.motion.retainLocalRotation = true;
             _splineFollower.onEndReached += SetOffBand;
             _splineFollower.followSpeed = 5;
