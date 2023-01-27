@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="" />
+    <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/CollisionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/CollisionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/EnemyJellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/EnemyJellyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/GrabController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/GrabController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Interfaces/IInteractable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Interfaces/IInteractable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Signals/CoreGameSignals.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Signals/CoreGameSignals.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,11 +92,22 @@
       <updated>1674725627506</updated>
       <workItem from="1674725631429" duration="127000" />
       <workItem from="1674725883318" duration="23979000" />
+      <workItem from="1674807248867" duration="6021000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="209" />
+    <coverage-tree-state>
+      <expand />
+      <select />
+    </coverage-tree-state>
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />

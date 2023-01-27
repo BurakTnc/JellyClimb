@@ -11,6 +11,7 @@ namespace _YabuGames.Scripts.Controllers
 {
     public class JellyController : MonoBehaviour,IInteractable
     {
+        [SerializeField] private Transform mesh, meshParent;
         [SerializeField] private float coolDown;
         [SerializeField] private Vector3 growingSize;
         [SerializeField] private int maxLevel = 10;
@@ -18,10 +19,9 @@ namespace _YabuGames.Scripts.Controllers
         
         private bool _onMove;
         private bool _onMerge;
-        private bool _ableToDrag;
+        private bool _ableToDrag = true;
         private Transform _transform;
         private float _timer;
-        private Transform _mesh;
         private int _level = 1;
         private Vector3 _currentScale;
         private Vector3 _oldPosition;
@@ -73,10 +73,11 @@ namespace _YabuGames.Scripts.Controllers
         private void SetVariables()
         {
             _transform = transform;
-            _mesh = _transform.GetChild(0);
+            // _meshParent = _transform.GetChild(0);
+            // _mesh=_transform.GetChild(0).GetChild(0);
             _timer += (coolDown + Random.Range(0.1f, 1f));
             _rubberEffect = GetComponentInChildren<RubberEffect>();
-            _currentScale = _transform.localScale;
+            _currentScale = meshParent.localScale;
             _collisionController = GetComponent<CollisionController>();
         }
         
@@ -87,6 +88,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void StopMoving()
         {
+            _onMove = true;
             _rubberEffect.m_EffectIntensity = .5f;
             _onMerge = true;
         }
@@ -117,12 +119,35 @@ namespace _YabuGames.Scripts.Controllers
             _level += takenLevel;
             _heightValue += growingSize.x * takenLevel;
             var mergedScale = _currentScale + (growingSize * takenLevel);
-            var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y, mergedScale.z);
+            var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
             _currentScale = mergedScale;
-            //seq.Append(_transform.DOScale(effectScale, .5f).SetEase(Ease.InSine));
-            seq.Append(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutSine).SetDelay(.2f)
-                .OnComplete(MergeDone));
+            seq.Append(meshParent.DOScale(effectScale, .5f).SetEase(Ease.OutBack));
+            seq.Append(meshParent.DOScale(_currentScale, .5f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+            seq.Join(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
+            // seq.Append(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutSine).SetDelay(.2f)
+            //     .OnComplete(MergeDone));
+
+        }
+
+        public void AllyMerge(int takenLevel)
+        {
+            if (_level >= maxLevel)  return;
             
+            _ableToDrag = false;
+            var seq = DOTween.Sequence();
+            _onMerge = true;
+            _level += takenLevel;
+            _heightValue += growingSize.x * takenLevel;
+            var mergedScale = _currentScale + (growingSize * takenLevel);
+            var meshScale = meshParent.localScale;
+            var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3f, meshScale.z);
+            _currentScale = mergedScale;
+            seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
+            seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
+            seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+            
+            // seq.Join(_transform.DOScale(mergedScale, .3f).SetEase(Ease.OutBack)
+            //     .OnComplete(MergeDone));
         }
 
         private void MergeDone()
@@ -130,10 +155,12 @@ namespace _YabuGames.Scripts.Controllers
             _collisionController.AllowEnemyMerging();
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
             JellySignals.Instance.OnAbleToMerge?.Invoke();
-            _transform.position += Vector3.up * _heightValue;
+            
+            //_transform.position += Vector3.up * _heightValue;
             _timer += .5f;
             _onMerge = false;
             _ableToDrag = true;
+            _onMove = false;
             _rubberEffect.m_EffectIntensity = 1f;
         }
 
@@ -155,7 +182,7 @@ namespace _YabuGames.Scripts.Controllers
 
             _transform.DOMove(desiredPosition, .5f).SetRelative(true)
                 .SetEase(Ease.InSine);
-            _mesh.DOLocalRotate(new Vector3(90, 0, 0), .4f,RotateMode.WorldAxisAdd).SetRelative(true)
+            mesh.DOLocalRotate(new Vector3(90, 0, 0), .4f,RotateMode.WorldAxisAdd).SetRelative(true)
                 .SetEase(Ease.InSine).OnComplete(OnClimbFinish);
             
             if(_onMerge) return;
@@ -201,7 +228,8 @@ namespace _YabuGames.Scripts.Controllers
         }
         public void TempMerge()
         {
-            _transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(Disappear);
+            Destroy(gameObject);
+            //_transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(Disappear);
         }
         public int GetLevel()
         {

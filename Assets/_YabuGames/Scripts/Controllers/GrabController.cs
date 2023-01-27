@@ -10,6 +10,7 @@ namespace _YabuGames.Scripts.Controllers
         private Vector3 _destination;
         private JellyController _jellyController;
         private CollisionController _collisionController;
+        private bool _isGrabbing = false;
 
         private void Awake()
         {
@@ -17,19 +18,36 @@ namespace _YabuGames.Scripts.Controllers
             _collisionController = GetComponent<CollisionController>();
         }
 
-        private void EndDrag()
+        private void OnEnable()
         {
-            
+            CoreGameSignals.Instance.OnDragging += DragSituation;
+        }
+
+        private void OnDisable()
+        {
+            CoreGameSignals.Instance.OnDragging -= DragSituation;
+        }
+
+        private void DragSituation(bool grabbing)
+        {
+            _isGrabbing = grabbing;
         }
 
         private void OnMouseUp()
         {
+            if(!_isGrabbing) return;
+            CoreGameSignals.Instance.OnDragging?.Invoke(false);
+            _collisionController.AllowAllyMerging();
             JellySignals.Instance.OnDragEnd?.Invoke();
             _jellyController.FinishDragEffect();
         }
 
         private void OnMouseDown()
         {
+            if(_isGrabbing) return;
+            Debug.Log("grabbed");
+            CoreGameSignals.Instance.OnDragging?.Invoke(true);
+            _collisionController.BlockAllyMerging();
             _collisionController.BlockEnemyMerging();
             _jellyController.DragEffect();
             JellySignals.Instance.OnDragStart?.Invoke();
@@ -45,7 +63,7 @@ namespace _YabuGames.Scripts.Controllers
             {
                 var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition - _difference);
                 targetPosition = new Vector3(targetPosition.x, targetPosition.y+1, targetPosition.y*2);
-                targetPosition.y = Mathf.Clamp(targetPosition.y, 1, 100);
+                targetPosition.y = Mathf.Clamp(targetPosition.y, 0, 100);
                 targetPosition.z = Mathf.Clamp(targetPosition.z, -7, 100);
                 transform.position = targetPosition;
             }

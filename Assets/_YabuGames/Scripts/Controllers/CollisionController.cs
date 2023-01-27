@@ -10,6 +10,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private JellyController _jellyController;
         private bool _onDrag = false;
+        private bool _allyMerge = false;
 
         private void Awake()
         {
@@ -17,26 +18,30 @@ namespace _YabuGames.Scripts.Controllers
         }
 
         #region Subscribtions
-        // private void OnEnable()
-        // {
-        //     Subscribe();
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     UnSubscribe();
-        // }
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+        
+        private void OnDisable()
+        {
+            UnSubscribe();
+        }
 
         private void Subscribe()
         {
-            JellySignals.Instance.OnDragStart += BlockEnemyMerging;
+            //JellySignals.Instance.OnDragStart += BlockEnemyMerging;
             JellySignals.Instance.OnAbleToMerge += AllowEnemyMerging;
+            // JellySignals.Instance.OnAbleToMerge += BlockAllyMerging;
+            // JellySignals.Instance.OnDragEnd += AllowAllyMerging;
         }
 
         private void UnSubscribe()
         {
-            JellySignals.Instance.OnDragStart -= BlockEnemyMerging;
-            JellySignals.Instance.OnAbleToMerge -= AllowEnemyMerging;
+            //JellySignals.Instance.OnDragStart -= BlockEnemyMerging;
+             JellySignals.Instance.OnAbleToMerge -= AllowEnemyMerging;
+            // JellySignals.Instance.OnAbleToMerge -= BlockAllyMerging;
+            //JellySignals.Instance.OnDragEnd -= AllowAllyMerging;
         }
         #endregion
 
@@ -50,15 +55,16 @@ namespace _YabuGames.Scripts.Controllers
             _onDrag = false;
         }
 
-
-        private void OnCollisionEnter(Collision collision)
+        public void AllowAllyMerging()
         {
-            switch (collision.transform.tag)
-            {
-                default:
-                    break;
-            }
+            _allyMerge = true;
         }
+
+        public void BlockAllyMerging()
+        {
+            _allyMerge = false;
+        }
+        
 
         private void OnTriggerEnter(Collider other)
         {
@@ -74,15 +80,26 @@ namespace _YabuGames.Scripts.Controllers
                         script.TempMerge();
                     }
                     break;
-                // case "Jelly":
-                //     if(!_onDrag) return;
-                //
-                //     if (other.TryGetComponent(out IInteractable jellyScript))
-                //     {
-                //         _jellyController.TempMerge();
-                //         jellyScript.Merge(_jellyController.GetLevel());
-                //     }
-                //     break;
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            switch (other.tag)
+            {
+                case "Jelly":
+                    if(!_onDrag) return;
+                
+                    if (other.TryGetComponent(out IInteractable jellyScript))
+                    {
+                        if(!_allyMerge) return;
+
+                        _allyMerge = false;
+                        jellyScript.AllyMerge(_jellyController.GetLevel());
+                        _jellyController.TempMerge();
+                        
+                    }
+                    break;
             }
         }
     }
