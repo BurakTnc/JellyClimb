@@ -18,7 +18,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Start()
         {
-            IdleShake();
+            //IdleShake();
         }
 
         private void IdleShake()
