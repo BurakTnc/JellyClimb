@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - TCP2_MOBILE
   - TCP2_RIM_LIGHTING
+  - TCP2_SPECULAR_STYLIZED
   m_InvalidKeywords:
   - TCP2_OUTLINE_CONST_SIZE
   - TCP2_UV_NORMALS_FULL
@@ -125,24 +126,24 @@ Material:
     - _RampBandsSmoothing: 0.1
     - _RampOffset: 0
     - _RampScale: 1
-    - _RampSmoothing: 0.359
-    - _RampThreshold: 0.67
+    - _RampSmoothing: 0.338
+    - _RampThreshold: 0.737
     - _RampType: 0
     - _ReceiveShadowsOff: 1
     - _ReflectionMapType: 0
     - _ReflectionSmoothness: 0.707
     - _RenderingMode: 0
     - _RimMax: 0
-    - _RimMin: 0.1
+    - _RimMin: 0.06
     - _ShadowColorLightAtten: 0
     - _SingleIndirectColor: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
-    - _SpecularRoughness: 0.354
-    - _SpecularToonSize: 0.001
+    - _SpecularRoughness: 0.307
+    - _SpecularToonSize: 0.164
     - _SpecularToonSmoothness: 1
-    - _SpecularType: 0
+    - _SpecularType: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseAlphaTest: 0
@@ -161,14 +162,14 @@ Material:
     - _UseSpecular: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8301887, g: 0.23887502, b: 0.718496, a: 1}
+    - _BaseColor: {r: 0.8396226, g: 0.31287822, b: 0.7384599, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.8773585, g: 0, b: 0.8773585, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.45947933, g: 0.45947933, b: 0.45947933, a: 0.5}
+    - _RimColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.5}
     - _SColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   m_BuildTextureStacks: []

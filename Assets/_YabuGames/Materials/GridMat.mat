@@ -19,7 +19,7 @@ Material:
   m_InvalidKeywords:
   - TCP2_UV_NORMALS_FULL
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
@@ -165,7 +165,7 @@ Material:
     - _UseSpecular: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.71599996, g: 0.34164464, b: 0.014538065, a: 0.74509805}
+    - _BaseColor: {r: 0.16603765, g: 0.6415094, b: 0, a: 0.5058824}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
