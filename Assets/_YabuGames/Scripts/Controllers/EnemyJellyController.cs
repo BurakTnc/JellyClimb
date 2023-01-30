@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using _YabuGames.Scripts.Interfaces;
 using DG.Tweening;
 using UnityEngine;
@@ -10,10 +12,12 @@ namespace _YabuGames.Scripts.Controllers
         [SerializeField] private int level;
 
         private Transform _transform;
+        private BoxCollider _collider;
 
         private void Awake()
         {
             _transform = transform;
+            _collider = GetComponent<BoxCollider>();
         }
 
         private void Start()
@@ -31,9 +35,17 @@ namespace _YabuGames.Scripts.Controllers
             Destroy(gameObject);
         }
 
+        private IEnumerator Latency()
+        {
+            _collider.enabled = false;
+            yield return new WaitForSeconds(1);
+            _collider.enabled = true;
+
+        }
+
         #region Public Voids
 
-        public void Merge(int empty)
+        public void Merge(int empty,IInteractable empty1)
         {
             
         }
@@ -48,8 +60,14 @@ namespace _YabuGames.Scripts.Controllers
             _transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(DisAppear);
         }
 
+        public void DisableCollider()
+        {
+            StartCoroutine(Latency());
+        }
+
         public int GetLevel()
         {
+            Debug.Log(level);
             return level;
         }
 

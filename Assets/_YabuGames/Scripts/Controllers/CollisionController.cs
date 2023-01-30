@@ -73,11 +73,11 @@ namespace _YabuGames.Scripts.Controllers
                 case "EnemyJelly":
                     if(_onDrag) return;
                     
-                    if (other.TryGetComponent(out IInteractable script))
+                    if (other.TryGetComponent(out EnemyJellyController script))
                     {
+                        script.DisableCollider();
                         _jellyController.BlockDragging();
-                        _jellyController.Merge(script.GetLevel());
-                        script.TempMerge();
+                        _jellyController.Merge(script.GetLevel(),script);
                     }
                     break;
             }

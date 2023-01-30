@@ -39,6 +39,7 @@ namespace _YabuGames.Scripts.Controllers
             CoreGameSignals.Instance.OnDragging?.Invoke(false);
             _collisionController.AllowAllyMerging();
             JellySignals.Instance.OnDragEnd?.Invoke();
+            _jellyController.GoToPrevPosition();
             _jellyController.FinishDragEffect();
         }
 

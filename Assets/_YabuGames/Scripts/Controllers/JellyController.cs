@@ -5,6 +5,7 @@ using _YabuGames.Scripts.Signals;
 using DG.Tweening;
 using Dreamteck.Splines;
 using JellyCube;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,19 +22,29 @@ namespace _YabuGames.Scripts.Controllers
         private bool _onMove;
         private bool _onMerge;
         private bool _ableToDrag = true;
+        private bool _isBlocked = false;
+        
         private Transform _transform;
+        
         private float _timer;
+        private float _heightValue;
+        
         private int _level = 1;
+        private int _stepCount = 0;
+        
         private Vector3 _currentScale;
         private Vector3 _oldPosition;
         private Vector3 _startRotation;
         private Vector3 _startGrid;
+        
         private RubberEffect _rubberEffect;
         private CollisionController _collisionController;
         private GrabController _grabController;
         private JellySplineController _jellySplineController;
-        private float _heightValue;
-        private int _stepCount = 0;
+
+        private BoxCollider _collider;
+        
+        
 
 
         private void Awake()
@@ -60,8 +71,8 @@ namespace _YabuGames.Scripts.Controllers
 
         private void UnSubscribe()
         {
-            JellySignals.Instance.OnDragStart += StopMoving;
-            JellySignals.Instance.OnDragEnd += BeginMoving;
+            JellySignals.Instance.OnDragStart -= StopMoving;
+            JellySignals.Instance.OnDragEnd -= BeginMoving;
         }
         #endregion
 
@@ -78,6 +89,7 @@ namespace _YabuGames.Scripts.Controllers
         private void GetVariables()
         {
             _transform = transform;
+            _collider = GetComponent<BoxCollider>();
             _timer += (coolDown + Random.Range(0.1f, 1f));
             _rubberEffect = GetComponentInChildren<RubberEffect>();
             _currentScale = meshParent.localScale;
@@ -104,7 +116,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void BeginMoving()
         {
-            _transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
+            Invoke(nameof(MergeDone),.3f);
         }
 
         private void CheckInput()
@@ -119,21 +131,35 @@ namespace _YabuGames.Scripts.Controllers
             _timer = Mathf.Clamp(_timer,0,2);
         }
 
-        public void Merge(int takenLevel)
+        public void Merge(int takenLevel,IInteractable script)
         {
-            if (_level >= maxLevel)  return;
-            _ableToDrag = false;
-            var seq = DOTween.Sequence();
-            _onMerge = true;
-            _level += takenLevel;
-            _heightValue += growingSize.x * takenLevel;
-            var mergedScale = _currentScale + (growingSize * takenLevel);
-            var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
-            _currentScale = mergedScale;
-            seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
-            seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
-            seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+            if(_isBlocked) return;
+            
+            if (takenLevel>_level)
+            {
+                _collider.enabled = false;
+                _isBlocked = true;
+                ResetClimb();
+                ResetPosition();
+            }
+            else
+            {
+                script.TempMerge();
+                if (_level >= maxLevel)  return;
+                _ableToDrag = false;
+                var seq = DOTween.Sequence();
+                _onMerge = true;
+                _level += takenLevel;
+                _heightValue = growingSize.x * takenLevel;
+                var mergedScale = _currentScale + (growingSize * takenLevel);
+                var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
+                _currentScale = mergedScale;
+                seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
+                seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
+                seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+            }
 
+            
         }
 
         public void AllyMerge(int takenLevel)
@@ -144,7 +170,7 @@ namespace _YabuGames.Scripts.Controllers
             var seq = DOTween.Sequence();
             _onMerge = true;
             _level += takenLevel;
-            _heightValue += growingSize.x * takenLevel;
+            _heightValue += (growingSize.x * takenLevel) / 2;
             var mergedScale = _currentScale + (growingSize * takenLevel);
             var meshScale = meshParent.localScale;
             var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3f, meshScale.z);
@@ -185,23 +211,20 @@ namespace _YabuGames.Scripts.Controllers
             var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
             var climbPosition= new Vector3(0, 1, 2);
             Vector3 desiredPosition;
-            var bandPosition = new Vector3(0, .2f, 1);
+            var bandPosition = new Vector3(0, .2f, 2);
             
-            if (_stepCount==6)
+            switch (_stepCount)
             {
-                
-                return;
+                case 6:
+                    return;
+                case 5:
+                    desiredPosition = bandPosition;
+                    break;
+                default:
+                    desiredPosition = climbPosition;
+                    break;
             }
 
-            if (_stepCount==5)
-            {
-                desiredPosition = bandPosition;
-            }
-            else
-            {
-                desiredPosition = climbPosition;
-            }
-            
             _onMove = true;
             _ableToDrag = false;
             _timer += coolDown;
@@ -250,17 +273,31 @@ namespace _YabuGames.Scripts.Controllers
             _stepCount = 0;
             _onMove = false;
             _grabController.enabled = true;
+            _collider.enabled = true;
         }
         private void ResetPosition()
         {
-            var scaleOffset = new Vector3(0, _heightValue, -_heightValue*2);
+            var scaleOffset = new Vector3(0, _heightValue, 0);
             _oldPosition = _startGrid + scaleOffset;
             _transform.DORotate(_startRotation, .5f).SetEase(Ease.InSine);
             _transform.DOJump(_startGrid+scaleOffset, 3, 1, .5f).SetEase(Ease.InSine).OnComplete(ResetClimb);
+            if (_isBlocked)
+            {
+                mesh.DORotate(new Vector3(-180,_startRotation.y,_startRotation.z), 1f);
+            }
+            else
+            {
+                _transform.DORotate(_startRotation, .5f).SetEase(Ease.InSine);
+            }
+            _isBlocked = false;
         }
 
         #region Public Methods
-        
+
+        public void GoToPrevPosition()
+        {
+            _transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
+        }
         public void SetOnBand()
         {
             _onMove = true;
