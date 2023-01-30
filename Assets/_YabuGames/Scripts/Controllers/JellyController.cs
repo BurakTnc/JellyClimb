@@ -24,7 +24,7 @@ namespace _YabuGames.Scripts.Controllers
         private bool _onMerge;
         private bool _ableToDrag = true;
         private bool _isBlocked = false;
-        
+
         private Transform _transform;
         
         private float _timer;
@@ -32,7 +32,8 @@ namespace _YabuGames.Scripts.Controllers
         
         private int _level = 1;
         private int _stepCount = 0;
-        
+        private int _stepLimit;
+
         private Vector3 _currentScale;
         private Vector3 _oldPosition;
         private Vector3 _startRotation;
@@ -45,9 +46,6 @@ namespace _YabuGames.Scripts.Controllers
 
         private BoxCollider _collider;
         
-        
-
-
         private void Awake()
         {
             GetVariables();
@@ -79,7 +77,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Start()
         {
-        
+            SetVariables();
         }
 
         private void Update()
@@ -91,7 +89,7 @@ namespace _YabuGames.Scripts.Controllers
         {
             _transform = transform;
             _collider = GetComponent<BoxCollider>();
-            _timer += (coolDown + Random.Range(0.1f, 1f));
+            _timer += (coolDown + Random.Range(0.1f, 1f)); //???
             _rubberEffect = GetComponentInChildren<RubberEffect>();
             _currentScale = meshParent.localScale;
             _collisionController = GetComponent<CollisionController>();
@@ -105,7 +103,8 @@ namespace _YabuGames.Scripts.Controllers
         
         private void SetVariables()
         {
-            
+            _stepLimit = GameManager.Instance.stepLimit;
+            _onMove = true;
         }
 
         private void StopMoving()
@@ -145,7 +144,7 @@ namespace _YabuGames.Scripts.Controllers
             }
             else
             {
-                //mesh.GetComponent<MeshRenderer>().material.DOColor(_material.color, 1);
+                mesh.GetComponent<MeshRenderer>().material.DOColor(_material.color, 1.5f);
                 script.TempMerge();
                 if (_level >= maxLevel)  return;
                 _ableToDrag = false;
@@ -198,7 +197,7 @@ namespace _YabuGames.Scripts.Controllers
         private void PullParticles()
         {
             PoolManager.Instance.GetSplashParticle(splashPosition.position);
-            if(_stepCount!=6)
+            if (_stepCount != _stepLimit + 1) 
                   PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
         }
 
@@ -212,20 +211,23 @@ namespace _YabuGames.Scripts.Controllers
             var currentScale = _transform.localScale;
             var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
             var climbPosition= new Vector3(0, 1, 2);
-            Vector3 desiredPosition;
             var bandPosition = new Vector3(0, .2f, 2);
             
-            switch (_stepCount)
+            Vector3 desiredPosition;
+            if (_stepCount == _stepLimit + 1) 
             {
-                case 6:
-                    return;
-                case 5:
-                    desiredPosition = bandPosition;
-                    break;
-                default:
-                    desiredPosition = climbPosition;
-                    break;
+                return;
             }
+
+            if (_stepCount==_stepLimit)
+            {
+                desiredPosition = bandPosition;
+            }
+            else
+            {
+                desiredPosition = climbPosition;
+            }
+            
 
             _onMove = true;
             _ableToDrag = false;
@@ -296,6 +298,19 @@ namespace _YabuGames.Scripts.Controllers
 
         #region Public Methods
 
+        public void SetIdleGrid()
+        {
+            _transform.position += new Vector3(0, _currentScale.x, .5f);
+            _startGrid = transform.position;
+            _oldPosition = transform.position;
+        }
+        public void SetStartGrid(Transform grid)
+        {
+            var position = grid.position;
+            _startGrid = position;
+            _oldPosition = position;
+            EnableMovement();
+        }
         public void GoToPrevPosition()
         {
             _transform.DOMove(_oldPosition, .5f).SetEase(Ease.OutSine).OnComplete(MergeDone);
@@ -304,17 +319,15 @@ namespace _YabuGames.Scripts.Controllers
         {
             _onMove = true;
             _grabController.enabled = false;
-           // _rubberEffect.m_EffectIntensity = .1f;
         }
 
         public void SetOffBand()
         {
-            Invoke(nameof(ResetPosition),.1f);
+            ResetPosition();
         }
         public void DragEffect()
         {
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
-           // _transform.DOScale(_currentScale * 1.3f, .5f).SetEase(Ease.OutBack);
         }
 
         public void FinishDragEffect()

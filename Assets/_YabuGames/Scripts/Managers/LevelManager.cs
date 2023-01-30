@@ -7,7 +7,6 @@ namespace _YabuGames.Scripts.Managers
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Instance;
-        public int sceneID;
         public int levelID;
 
         private void Awake()
@@ -57,7 +56,6 @@ namespace _YabuGames.Scripts.Managers
         
         private void GetValues()
         {
-            sceneID = PlayerPrefs.GetInt("sceneID", 0);
             levelID = PlayerPrefs.GetInt("levelID", 1);
         }
 
@@ -69,13 +67,12 @@ namespace _YabuGames.Scripts.Managers
 
         private void Save()
         {
-            PlayerPrefs.SetInt("sceneID",sceneID);
             PlayerPrefs.SetInt("levelID",levelID);
         }
 
         private void LoadScene()
         {
-            SceneManager.LoadScene(sceneID);
+            SceneManager.LoadScene(0);
         }
     }
 }

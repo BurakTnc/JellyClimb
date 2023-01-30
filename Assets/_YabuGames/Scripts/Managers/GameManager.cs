@@ -1,13 +1,27 @@
+using System;
+using System.Collections.Generic;
+using _YabuGames.Scripts.Controllers;
 using _YabuGames.Scripts.Signals;
+using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _YabuGames.Scripts.Managers
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+        public static int Money;
 
-        private int _money;
+        public List<Transform> emptyGrids = new List<Transform>();
+        public List<Transform> occupiedGrids = new List<Transform>();
+        public int stairsLevel = 1;
+        public int stepLimit;
+        
+        [SerializeField] private int[] maxStepCounts;
+        
+        
 
         private void Awake()
         {
@@ -23,6 +37,7 @@ namespace _YabuGames.Scripts.Managers
 
             #endregion
             GetValues();
+            SetValues();
         }
 
         #region Subscribtions
@@ -48,24 +63,67 @@ namespace _YabuGames.Scripts.Managers
 
         #endregion
 
+        private void Start()
+        {
+            SpawnJellies();
+        }
+
         private void GetValues()
         {
-            _money = PlayerPrefs.GetInt("money", 0);
+            Money = PlayerPrefs.GetInt("money", 0);
+        }
+
+        private void SetValues()
+        {
+            stepLimit = maxStepCounts[stairsLevel];
+
+        }
+
+        private void SpawnJellies()
+        {
+            for (int i = 0; i < emptyGrids.Count; i++)
+            {
+                GameObject temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
+                var script = temp.GetComponent<JellyController>();
+                temp.transform.position = emptyGrids[i].position;
+                script.SetIdleGrid();
+            }
         }
 
         private void Save()
         {
-            PlayerPrefs.SetInt("money",_money);
+            PlayerPrefs.SetInt("money",Money);
+        }
+
+        public void SetGrid(Transform grid, bool isOccupied)
+        {
+            if (isOccupied)
+            {
+                emptyGrids.Remove(grid);
+                occupiedGrids.Add(grid);
+            }
+            else
+            {
+                occupiedGrids.Remove(grid);
+                emptyGrids.Add(grid);
+            }
+        }
+        public void AddJelly()
+        {
+            GameObject temp = Resources.Load<GameObject>("Spawnables/Jelly");
+            temp.transform.localScale=Vector3.zero;
+            temp.transform.position = emptyGrids[Random.Range(0, emptyGrids.Count)].position;
+            temp.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack);
         }
 
         public void ArrangeMoney(int value)
         {
-            _money += value;
+            Money += value;
         }
 
         public int GetMoney()
         {
-            return _money < 0 ? 0 : _money;
+            return Money < 0 ? 0 : Money;
         }
     }
 }

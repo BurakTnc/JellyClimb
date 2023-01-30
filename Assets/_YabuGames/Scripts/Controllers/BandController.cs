@@ -1,4 +1,5 @@
 using System;
+using _YabuGames.Scripts.Managers;
 using Dreamteck.Splines;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace _YabuGames.Scripts.Controllers
     {
         public static BandController Instance;
         
-       [SerializeField] private SplineComputer spline;
+       [SerializeField] private SplineComputer[] spline;
        [SerializeField] private SplineMesh mesh;
        [SerializeField] private float moveSpeed;
 
@@ -39,7 +40,7 @@ namespace _YabuGames.Scripts.Controllers
 
        public void GetBand(JellySplineController jellySplineController)
        {
-           jellySplineController.SetOnBand(spline);
+           jellySplineController.SetOnBand(spline[GameManager.Instance.stairsLevel]);
        }
        
     }
