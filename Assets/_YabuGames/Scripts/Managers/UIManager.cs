@@ -113,6 +113,7 @@ namespace _YabuGames.Scripts.Managers
 
         public void RetryButton()
         {
+            Debug.Log("yarrrag");
             CoreGameSignals.Instance.OnLevelLoad?.Invoke();
             HapticManager.Instance.PlaySelectionHaptic();
         }
