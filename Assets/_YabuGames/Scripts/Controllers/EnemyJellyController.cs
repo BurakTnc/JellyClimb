@@ -20,28 +20,18 @@ namespace _YabuGames.Scripts.Controllers
             _collider = GetComponent<BoxCollider>();
         }
 
-        private void Start()
-        {
-            //IdleShake();
-        }
-
-        private void IdleShake()
-        {
-            _transform.DOShakeScale(2f, Vector3.one * .1f, 1, 100, false)
-                .SetLoops(-1, LoopType.Yoyo);
-        }
         private void DisAppear()
         {
             Destroy(gameObject);
         }
 
-        private IEnumerator Latency()
-        {
-            _collider.enabled = false;
-            yield return new WaitForSeconds(1);
-            _collider.enabled = true;
-
-        }
+        // private IEnumerator Latency()
+        // {
+        //     _collider.enabled = false;
+        //     yield return new WaitForSeconds(1);
+        //     _collider.enabled = true;
+        //
+        // }
 
         #region Public Voids
 
@@ -62,12 +52,11 @@ namespace _YabuGames.Scripts.Controllers
 
         public void DisableCollider()
         {
-            StartCoroutine(Latency());
+           // StartCoroutine(Latency());
         }
 
         public int GetLevel()
         {
-            Debug.Log(level);
             return level;
         }
 

@@ -268,6 +268,7 @@ namespace _YabuGames.Scripts.Controllers
         private void ResetClimb()
         {
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
             _rubberEffect.m_EffectIntensity = 1;
             _timer = coolDown;
             _stepCount = 0;
