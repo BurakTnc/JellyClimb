@@ -1,5 +1,6 @@
 using System;
 using _YabuGames.Scripts.Interfaces;
+using _YabuGames.Scripts.Managers;
 using _YabuGames.Scripts.Signals;
 using UnityEngine;
 
@@ -9,8 +10,10 @@ namespace _YabuGames.Scripts.Controllers
     {
 
         private JellyController _jellyController;
+        
         private bool _onDrag = false;
         private bool _allyMerge = false;
+        private bool _onFirstMove = true;
 
         private void Awake()
         {
@@ -30,20 +33,15 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Subscribe()
         {
-            //JellySignals.Instance.OnDragStart += BlockEnemyMerging;
             JellySignals.Instance.OnAbleToMerge += AllowEnemyMerging;
-            // JellySignals.Instance.OnAbleToMerge += BlockAllyMerging;
-            // JellySignals.Instance.OnDragEnd += AllowAllyMerging;
         }
 
         private void UnSubscribe()
         {
-            //JellySignals.Instance.OnDragStart -= BlockEnemyMerging;
-             JellySignals.Instance.OnAbleToMerge -= AllowEnemyMerging;
-            // JellySignals.Instance.OnAbleToMerge -= BlockAllyMerging;
-            //JellySignals.Instance.OnDragEnd -= AllowAllyMerging;
+            JellySignals.Instance.OnAbleToMerge -= AllowEnemyMerging;
         }
         #endregion
+        
 
         public void BlockEnemyMerging()
         {
@@ -80,6 +78,20 @@ namespace _YabuGames.Scripts.Controllers
                         _jellyController.Merge(script.GetLevel(),script);
                     }
                     break;
+                
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            switch (other.tag)
+            {
+                case "Grid":
+                    if (_onDrag)
+                    {
+                        GameManager.Instance.SetGrid(other.transform,false);
+                    }
+                    break;
             }
         }
 
@@ -98,6 +110,25 @@ namespace _YabuGames.Scripts.Controllers
                         jellyScript.AllyMerge(_jellyController.GetLevel());
                         _jellyController.TempMerge();
                         
+                    }
+                    break;
+                case "Grid":
+                    if (_onDrag || _onFirstMove)
+                    {
+                        if(!_allyMerge) return;
+
+                        _allyMerge = false;
+                        _onFirstMove = false;
+                        GameManager.Instance.SetGrid(other.transform,true);
+                    }
+                    break;
+                case "StartGrid":
+                    if (_onDrag)
+                    {
+                        if(!_allyMerge) return;
+
+                        _allyMerge = false;
+                        _jellyController.SetStartGrid(other.transform);
                     }
                     break;
             }
