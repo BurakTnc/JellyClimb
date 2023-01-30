@@ -18,6 +18,7 @@ namespace _YabuGames.Scripts.Controllers
         [SerializeField] private Vector3 growingSize;
         [SerializeField] private int maxLevel = 10;
         [SerializeField] private Transform splashPosition, groundSplashPosition;
+        [SerializeField] private Material _material;
         
         private bool _onMove;
         private bool _onMerge;
@@ -144,6 +145,7 @@ namespace _YabuGames.Scripts.Controllers
             }
             else
             {
+                //mesh.GetComponent<MeshRenderer>().material.DOColor(_material.color, 1);
                 script.TempMerge();
                 if (_level >= maxLevel)  return;
                 _ableToDrag = false;
@@ -268,7 +270,6 @@ namespace _YabuGames.Scripts.Controllers
         private void ResetClimb()
         {
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
-            PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
             _rubberEffect.m_EffectIntensity = 1;
             _timer = coolDown;
             _stepCount = 0;

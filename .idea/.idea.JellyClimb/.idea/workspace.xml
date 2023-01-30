@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Prefabs/EnemyJelly.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Prefabs/EnemyJelly.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/EnemyJellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/EnemyJellyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +87,7 @@
       <workItem from="1674725631429" duration="127000" />
       <workItem from="1674725883318" duration="23979000" />
       <workItem from="1674807248867" duration="23216000" />
-      <workItem from="1675070353242" duration="6925000" />
+      <workItem from="1675070353242" duration="7887000" />
     </task>
     <servers />
   </component>
