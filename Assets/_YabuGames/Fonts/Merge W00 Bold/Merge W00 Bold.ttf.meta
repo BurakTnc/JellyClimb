@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8e957bb321a264321a85e76f3032996a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - MergeW00-Bold
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f854a60e5e2c648a2bc1655f731882b0, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
