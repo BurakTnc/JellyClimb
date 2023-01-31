@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8220563466726514539}
   - component: {fileID: 8220563466727381605}
   m_Layer: 0
-  m_Name: GroundSplash 1
+  m_Name: ground 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8392157, g: 0.8039216, b: 0.23529412, a: 1}
+      maxColor: {r: 0.52156866, g: 0.11764706, b: 0.6431373, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4813,7 +4813,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23d525afedf5548dea24149a2ec93fb5, type: 2}
+  - {fileID: 2100000, guid: efd3148e59ca84ff4b8cf124f2c7221f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
