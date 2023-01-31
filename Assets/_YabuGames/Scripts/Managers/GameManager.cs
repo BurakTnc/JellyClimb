@@ -18,12 +18,13 @@ namespace _YabuGames.Scripts.Managers
         
         public List<Transform> emptyGrids = new List<Transform>();
         public List<Transform> occupiedGrids = new List<Transform>();
-        public int stairsLevel = 1;
+        public int stairsLevel = 0;
         public int stepLimit;
+        public int horizontalLevel = 0;
         
         [SerializeField] private int[] maxStepCounts;
-
         
+        private float _verticalReference, _horizontalReference;
 
         private void Awake()
         {
@@ -78,7 +79,36 @@ namespace _YabuGames.Scripts.Managers
         private void SetValues()
         {
             stepLimit = maxStepCounts[stairsLevel];
+            SetReferencePositions();
+        }
 
+        private void SetReferencePositions()
+        {
+            switch (stairsLevel)
+            {
+                case 0:
+                    _verticalReference = 4;
+                    break;
+                case 1:
+                    _verticalReference = 1;
+                    break;
+                case 2:
+                    _verticalReference = 1;
+                    break;
+            }
+
+            switch (horizontalLevel)
+            {
+                case 0:
+                    _horizontalReference = 2;
+                    break;
+                case 1:
+                    _horizontalReference = 1;
+                    break;
+                case 2:
+                    _horizontalReference = 1;
+                    break;
+            }
         }
 
         private void SpawnJellies()
@@ -136,6 +166,16 @@ namespace _YabuGames.Scripts.Managers
         public int GetMoney()
         {
             return Money < 0 ? 0 : Money;
+        }
+
+        public void VerticalExpand()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HorizontalExpand()
+        {
+            throw new NotImplementedException();
         }
     }
 }

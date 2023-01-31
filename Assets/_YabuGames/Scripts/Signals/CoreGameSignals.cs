@@ -14,6 +14,8 @@ namespace _YabuGames.Scripts.Signals
         public UnityAction OnSave = delegate { };
         public UnityAction<int,bool> OnSpawnCoins=delegate { };
         public UnityAction<bool> OnDragging = delegate { };
+        public UnityAction<int> OnVerticalExpand = delegate { };
+        public UnityAction<int> OnHorizontalExpand = delegate { };
 
         #region Singleton
         private void Awake()

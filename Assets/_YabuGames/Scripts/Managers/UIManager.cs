@@ -166,12 +166,12 @@ namespace _YabuGames.Scripts.Managers
 
         public void HorizontalExpand()
         {
-            
+            GameManager.Instance.HorizontalExpand();
         }
 
         public void VerticalExpand()
         {
-            
+            GameManager.Instance.VerticalExpand();
         }
         
 
