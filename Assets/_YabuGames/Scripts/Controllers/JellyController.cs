@@ -191,6 +191,7 @@ namespace _YabuGames.Scripts.Controllers
             var seq = DOTween.Sequence();
             _onMerge = true;
             _level ++;
+            HapticManager.Instance.PlayWarningHaptic();
             SetMaterialAndLevel();
             _heightValue += growingSize.x;
             var mergedScale = _currentScale + growingSize;
@@ -206,7 +207,8 @@ namespace _YabuGames.Scripts.Controllers
         private void MergeDone()
         {
             _collisionController.AllowEnemyMerging();
-            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
+            splash.transform.position = splashPosition.position;
             JellySignals.Instance.OnAbleToMerge?.Invoke();
             _timer += .35f;
             _onMerge = false;
@@ -217,10 +219,12 @@ namespace _YabuGames.Scripts.Controllers
 
         private void PullParticles()
         {
+            var groundSplash = Instantiate(Resources.Load<GameObject>($"Particles/ground/ground{_level}"));
+            var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
+            splash.transform.position = splashPosition.position;
             PoolManager.Instance.GetIncomeTextParticle(transform.position+new Vector3(.7f,0,-1),_level);
-            PoolManager.Instance.GetSplashParticle(splashPosition.position);
             if (_stepCount != _stepLimit + 1) 
-                  PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
+                groundSplash.transform.position = groundSplashPosition.position;
         }
 
         private void GetOnBand()
@@ -305,7 +309,8 @@ namespace _YabuGames.Scripts.Controllers
 
         private void ResetClimb()
         {
-            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
+            splash.transform.position = splashPosition.position;
             _rubberEffect.m_EffectIntensity = 1;
             _timer = coolDown;
             _stepCount = 0;
@@ -383,7 +388,8 @@ namespace _YabuGames.Scripts.Controllers
         }
         public void DragEffect()
         {
-            PoolManager.Instance.GetSplashParticle(splashPosition.position );
+            var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
+            splash.transform.position = splashPosition.position;
         }
 
         public void FinishDragEffect()

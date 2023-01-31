@@ -1,4 +1,5 @@
 using System;
+using _YabuGames.Scripts.Managers;
 using _YabuGames.Scripts.Signals;
 using UnityEngine;
 
@@ -51,6 +52,7 @@ namespace _YabuGames.Scripts.Controllers
         private void OnMouseDown()
         {
             if(_isGrabbing) return;
+            HapticManager.Instance.PlaySoftHaptic();
             CoreGameSignals.Instance.OnDragging?.Invoke(true);
             _collisionController.BlockAllyMerging();
             _collisionController.BlockEnemyMerging();

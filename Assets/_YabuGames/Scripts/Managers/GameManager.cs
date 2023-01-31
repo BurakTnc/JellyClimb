@@ -197,13 +197,18 @@ namespace _YabuGames.Scripts.Managers
                 temp.transform.position = new Vector3(xPosReferences[i], _verticalReference - 5,
                     ((_verticalReference + 1) * 2) + 1);
 
-                temp.transform.DOMoveY(_verticalReference + 1, .5f).SetDelay(delay).SetEase(Ease.OutBack);
+                temp.transform.DOMoveY(_verticalReference + 1, .5f).SetDelay(delay).SetEase(Ease.OutBack)
+                    .OnComplete(Haptic);
                 temp.transform.DOScale(new Vector3(120, 60, 120), .5f).SetDelay(delay).SetEase(Ease.OutBack)
                     .OnComplete(SetReferencePositions);
 
             }
         }
 
+        private void Haptic()
+        {
+            HapticManager.Instance.PlaySelectionHaptic();
+        }
         public void HorizontalExpand()
         {
             horizontalLevel++;
@@ -217,7 +222,7 @@ namespace _YabuGames.Scripts.Managers
                 temp.transform.position = new Vector3(_horizontalReference + 2, yPosReferences[i] - 5,
                     yPosReferences[i] * 2+1);
 
-                temp.transform.DOMoveY(yPosReferences[i], .3f).SetDelay(delay).SetEase(Ease.OutBack);
+                temp.transform.DOMoveY(yPosReferences[i], .3f).SetDelay(delay).SetEase(Ease.OutBack).OnComplete(Haptic);
                 temp.transform.DOScale(new Vector3(120, 60, 120), .3f).SetDelay(delay).SetEase(Ease.OutBack)
                     .OnComplete(SetReferencePositions);
 

@@ -269,6 +269,7 @@ namespace _YabuGames.Scripts.Managers
         {
             GameManager.Money += 1000000;
             CheckButtonStats();
+            HapticManager.Instance.PlayLightHaptic();
         }
 
         public void ResetButton()
@@ -277,9 +278,11 @@ namespace _YabuGames.Scripts.Managers
         }
         public void JellyButton()
         {
+            GameManager.Money -= _jellyPrice;
             GameManager.Instance.AddJelly();
             _jellyPrice *= 2;
             CheckButtonStats();
+            HapticManager.Instance.PlayLightHaptic();
         }
 
         public void OpenGridButton(Transform grid)
@@ -300,6 +303,7 @@ namespace _YabuGames.Scripts.Managers
 
             grid.gameObject.SetActive(true);
             CheckButtonStats();
+            HapticManager.Instance.PlayLightHaptic();
         }
 
         public void DisableGridButton(Transform gridButton)
@@ -312,15 +316,23 @@ namespace _YabuGames.Scripts.Managers
             GameManager.Instance.HorizontalExpand();
             if (GameManager.Instance.horizontalLevel==1)
             {
+                GameManager.Money -= 10000;
                 expandButton2.gameObject.SetActive(true);
                 expandButton2.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack).SetDelay(.5f);
             }
+            else
+            {
+                GameManager.Money -= 50000;
+            }
+            HapticManager.Instance.PlayLightHaptic();
             CheckButtonStats();
         }
 
         public void VerticalExpand()
         {
             GameManager.Instance.VerticalExpand();
+            GameManager.Money -= 100000;
+            HapticManager.Instance.PlayLightHaptic();
             CheckButtonStats();
         }
         
