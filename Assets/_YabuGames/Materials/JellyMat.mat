@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: edd7abf643fa4bc4e8561d4c280c97cf, type: 3}
   m_ValidKeywords:
   - TCP2_MOBILE
-  - TCP2_RIM_LIGHTING
+  - TCP2_SPECULAR
   - TCP2_SPECULAR_STYLIZED
   m_InvalidKeywords:
   - TCP2_OUTLINE_CONST_SIZE
@@ -126,8 +126,8 @@ Material:
     - _RampBandsSmoothing: 0.1
     - _RampOffset: 0
     - _RampScale: 1
-    - _RampSmoothing: 0.338
-    - _RampThreshold: 0.737
+    - _RampSmoothing: 1
+    - _RampThreshold: 0.9
     - _RampType: 0
     - _ReceiveShadowsOff: 1
     - _ReflectionMapType: 0
@@ -141,8 +141,8 @@ Material:
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
     - _SpecularRoughness: 0.307
-    - _SpecularToonSize: 0.164
-    - _SpecularToonSmoothness: 1
+    - _SpecularToonSize: 0.025
+    - _SpecularToonSmoothness: 0.73
     - _SpecularType: 1
     - _SrcBlend: 1
     - _UVSec: 0
@@ -156,10 +156,10 @@ Material:
     - _UseOcclusion: 0
     - _UseOutline: 0
     - _UseReflections: 0
-    - _UseRim: 1
+    - _UseRim: 0
     - _UseRimLightMask: 0
     - _UseShadowTexture: 0
-    - _UseSpecular: 0
+    - _UseSpecular: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.8396226, g: 0.31287822, b: 0.7384599, a: 1}

@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 4791
+  controlID: 9609
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
-  m_Stats: 0
+  m_Stats: 1
   m_SelectedSizes: 07000000000000001f0000000d000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 4792
+  controlID: 9610
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 4793
+  controlID: 9611
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,8 +189,8 @@ MonoBehaviour:
     y: 0
     width: 373
     height: 703
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -215,8 +215,8 @@ MonoBehaviour:
     y: 0
     width: 647
     height: 703
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -448,9 +448,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 16.22408, y: 36.145134, z: -6.465355}
+    m_Target: {x: 372.01886, y: 661, z: 12.741405}
     speed: 2
-    m_Value: {x: 16.22408, y: 36.145134, z: -6.465355}
+    m_Value: {x: 372.01886, y: 661, z: 12.741405}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -497,13 +497,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 1
   m_Rotation:
-    m_Target: {x: -0.946702, y: -0.049669735, z: -0.26353842, w: 0.17843908}
+    m_Target: {x: 0.41394016, y: -0.11555294, z: 0.053070754, w: 0.9013829}
     speed: 2
-    m_Value: {x: -0.94669974, y: -0.049669616, z: -0.2635378, w: 0.17843865}
+    m_Value: {x: -0.4139402, y: 0.11555294, z: -0.053070754, w: -0.901383}
   m_Size:
-    m_Target: 8.826716
+    m_Target: 0.8660254
     speed: 2
-    m_Value: 8.826716
+    m_Value: 0.866025
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -592,8 +592,8 @@ MonoBehaviour:
     y: 0
     width: 299
     height: 703
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -725,21 +725,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_YabuGames/Materials
+    - Assets
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/_YabuGames/Materials
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/yavuzozsoy/Documents/UnityProjects/JellyClimb
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 95}
-    m_SelectedIDs: 1c7d0000
-    m_LastClickedID: 32028
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: e87c0000
+    m_LastClickedID: 31976
     m_ExpandedIDs: 00000000e87c0000ea7c0000ec7c0000ee7c0000f07c0000f27c0000f47c0000f67c0000f87c0000fa7c0000fc7c0000fe7c0000007d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -796,7 +796,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000a0cb00008e8b0100b28b010012e00000ecd800001ea5000096370100a0afffff6042010046790000487900004c790000
+    m_ExpandedInstanceIDs: c6230000a0cb00008e8b0100b28b010012e00000ecd800001ea5000096370100a0afffff604201004679000048790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -902,8 +902,8 @@ MonoBehaviour:
     y: 0
     width: 409
     height: 1030
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}

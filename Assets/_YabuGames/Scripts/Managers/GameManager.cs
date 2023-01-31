@@ -73,7 +73,9 @@ namespace _YabuGames.Scripts.Managers
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
             SpawnJellies();
+            
         }
 
         private void GetValues()

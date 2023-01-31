@@ -3,15 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BandTex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BandTex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash5.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash5.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash6.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash7.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash7.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Spawnables/Block.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Spawnables/Block.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandTex.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandTex.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 1.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 1.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 2.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 2.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 3.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 4.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 4.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 5.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 5.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 6.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 6.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,23 +38,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "/Users/yavuzozsoy/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
-      "/Users/yavuzozsoy/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
-      "/Users/yavuzozsoy/.local/share/Symbols/src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/Users/yavuzozsoy/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/yavuzozsoy/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+      &quot;/Users/yavuzozsoy/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/2021.3.14f1/Unity.app/Contents/MacOS/Unity" />
@@ -97,6 +109,7 @@
       <workItem from="1675153634845" duration="29013000" />
       <workItem from="1675198258191" duration="37000" />
       <workItem from="1675198425361" duration="126000" />
+      <workItem from="1675200588141" duration="91000" />
     </task>
     <servers />
   </component>
