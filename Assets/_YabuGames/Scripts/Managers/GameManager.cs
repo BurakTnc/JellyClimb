@@ -23,6 +23,7 @@ namespace _YabuGames.Scripts.Managers
         public int horizontalLevel = 0;
         
         [SerializeField] private int[] maxStepCounts;
+        [SerializeField] private float[] xPosReferences, yPosReferences;
         
         private float _verticalReference, _horizontalReference;
 
@@ -90,10 +91,16 @@ namespace _YabuGames.Scripts.Managers
                     _verticalReference = 4;
                     break;
                 case 1:
-                    _verticalReference = 1;
+                    _verticalReference = 5;
                     break;
-                case 2:
-                    _verticalReference = 1;
+                case 3:
+                    _verticalReference = 6;
+                    break;
+                case 4:
+                    _verticalReference = 7;
+                    break;
+                case 5:
+                    _verticalReference = 8;
                     break;
             }
 
@@ -103,10 +110,13 @@ namespace _YabuGames.Scripts.Managers
                     _horizontalReference = 2;
                     break;
                 case 1:
-                    _horizontalReference = 1;
+                    _horizontalReference = 4;
                     break;
                 case 2:
-                    _horizontalReference = 1;
+                    _horizontalReference = 6;
+                    break;
+                case 3:
+                    _horizontalReference = 8;
                     break;
             }
         }
@@ -170,12 +180,42 @@ namespace _YabuGames.Scripts.Managers
 
         public void VerticalExpand()
         {
-            throw new NotImplementedException();
+            stairsLevel++;
+            var delay = 0f;
+            Vector3 desiredPos;
+            for (var i = 0; i < 3+horizontalLevel; i++)
+            {
+                delay += .1f;
+                var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Block"));
+                temp.transform.localScale = Vector3.zero;
+                temp.transform.position = new Vector3(xPosReferences[i], _verticalReference - 5,
+                    ((_verticalReference + 1) * 2) + 1);
+
+                temp.transform.DOMoveY(_verticalReference + 1, .5f).SetDelay(delay).SetEase(Ease.OutBack);
+                temp.transform.DOScale(new Vector3(120, 60, 120), .5f).SetDelay(delay).SetEase(Ease.OutBack)
+                    .OnComplete(SetReferencePositions);
+
+            }
         }
 
         public void HorizontalExpand()
         {
-            throw new NotImplementedException();
+            horizontalLevel++;
+            var delay = 0f;
+            Vector3 desiredPos;
+            for (var i = 0; i < 5+stairsLevel; i++)
+            {
+                delay += .1f;
+                var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Block"));
+                temp.transform.localScale = Vector3.zero;
+                temp.transform.position = new Vector3(_horizontalReference + 2, yPosReferences[i] - 5,
+                    yPosReferences[i] * 2+1);
+
+                temp.transform.DOMoveY(yPosReferences[i], .3f).SetDelay(delay).SetEase(Ease.OutBack);
+                temp.transform.DOScale(new Vector3(120, 60, 120), .3f).SetDelay(delay).SetEase(Ease.OutBack)
+                    .OnComplete(SetReferencePositions);
+
+            }
         }
     }
 }
