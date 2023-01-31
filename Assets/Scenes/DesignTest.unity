@@ -17966,7 +17966,7 @@ GameObject:
   - component: {fileID: 5242669177759730072}
   m_Layer: 0
   m_Name: Grid_3
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18000,7 +18000,7 @@ GameObject:
   - component: {fileID: 5242669177874413165}
   m_Layer: 0
   m_Name: Grid_1
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18135,7 +18135,7 @@ GameObject:
   - component: {fileID: 5242669178207595335}
   m_Layer: 0
   m_Name: Grid_5
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18299,7 +18299,7 @@ GameObject:
   - component: {fileID: 5242669178491853749}
   m_Layer: 0
   m_Name: Grid_2
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18398,7 +18398,7 @@ GameObject:
   - component: {fileID: 5242669179142728345}
   m_Layer: 0
   m_Name: Grid_4
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
