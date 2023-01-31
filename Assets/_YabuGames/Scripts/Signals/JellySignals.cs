@@ -23,6 +23,6 @@ namespace _YabuGames.Scripts.Signals
         public UnityAction OnDragStart = delegate { };
         public UnityAction OnDragEnd = delegate { };
         public UnityAction OnAbleToMerge = delegate { };
-        public UnityAction<JellyController> OnMerge = delegate { };
+        public UnityAction<int> OnStairUp = delegate { };
     }
 }

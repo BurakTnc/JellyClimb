@@ -107,8 +107,8 @@ namespace _YabuGames.Scripts.Controllers
                         if(!_allyMerge) return;
 
                         _allyMerge = false;
-                        jellyScript.AllyMerge(_jellyController.GetLevel());
-                        _jellyController.TempMerge();
+                        jellyScript.AllyMerge(_jellyController.GetLevel(),_jellyController);
+                        //_jellyController.TempMerge(jellyScript.GetLevel());
                         
                     }
                     break;

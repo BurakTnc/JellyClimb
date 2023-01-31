@@ -15,6 +15,9 @@ namespace _YabuGames.Scripts.Managers
         public static int Money;
         public static int JellyCount;
         public static int JellyLimit = 3;
+        public static int BoughtGrid = 0;
+        public static int ClimbedStairs = 1;
+        public static int TargetClimb;
         
         public List<Transform> emptyGrids = new List<Transform>();
         public List<Transform> occupiedGrids = new List<Transform>();
@@ -48,6 +51,7 @@ namespace _YabuGames.Scripts.Managers
         private void OnEnable()
         {
             Subscribe();
+            TargetClimb = 100;
         }
 
         private void OnDisable()
@@ -181,6 +185,8 @@ namespace _YabuGames.Scripts.Managers
         public void VerticalExpand()
         {
             stairsLevel++;
+            JellySignals.Instance.OnStairUp?.Invoke(5 + stairsLevel);
+            BandController.Instance.SetBands();
             var delay = 0f;
             Vector3 desiredPos;
             for (var i = 0; i < 3+horizontalLevel; i++)

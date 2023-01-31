@@ -1,8 +1,10 @@
 using System;
 using _YabuGames.Scripts.Signals;
+using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _YabuGames.Scripts.Managers
@@ -13,6 +15,8 @@ namespace _YabuGames.Scripts.Managers
         
         [SerializeField] private GameObject mainPanel, gamePanel, winPanel, losePanel, storePanel;
         [SerializeField] private TextMeshProUGUI[] moneyText;
+        [SerializeField] private TextMeshProUGUI jellyButtonText, progressText;
+        [SerializeField] private Image progressBar;
 
         [SerializeField] private Button addJellyButton,
             incomeButton,
@@ -21,10 +25,11 @@ namespace _YabuGames.Scripts.Managers
             expandButton2,
             gridButton1,
             gridButton2;
+            
 
         private int _jellyPrice, _incomePrice, _increasePrice, _expandPrice;
         private int _jellyLevel, _incomeLevel, _increaseLevel, _expandLevel;
-
+        private float _fillAmount;
 
         private void Awake()
         {
@@ -57,7 +62,7 @@ namespace _YabuGames.Scripts.Managers
 
         private void GetValues()
         {
-            _jellyPrice = PlayerPrefs.GetInt("jellyPrice", 10);
+            _jellyPrice = PlayerPrefs.GetInt("jellyPrice", 5);
             _incomePrice = PlayerPrefs.GetInt("incomePrice", 10);
             _increasePrice = PlayerPrefs.GetInt("increasePrice", 1000);
             _expandPrice = PlayerPrefs.GetInt("expandPrice", 500);
@@ -84,37 +89,122 @@ namespace _YabuGames.Scripts.Managers
         private void Start()
         {
             SetMoneyTexts();
+            CheckButtonStats();
         }
 
         #region Subscribtions
         private void Subscribe()
-                {
-                    CoreGameSignals.Instance.OnLevelWin += LevelWin;
-                    CoreGameSignals.Instance.OnLevelFail += LevelLose;
-                    CoreGameSignals.Instance.OnGameStart += OnGameStart;
-                }
+        {
+            CoreGameSignals.Instance.OnLevelWin += LevelWin;
+            CoreGameSignals.Instance.OnLevelFail += LevelLose;
+            CoreGameSignals.Instance.OnGameStart += OnGameStart;
+            CoreGameSignals.Instance.OnSave += SetMoneyTexts;
+            CoreGameSignals.Instance.OnSave += CheckButtonStats;
+        }
         
-                private void UnSubscribe()
-                {
-                    CoreGameSignals.Instance.OnLevelWin -= LevelWin;
-                    CoreGameSignals.Instance.OnLevelFail -= LevelLose;
-                    CoreGameSignals.Instance.OnGameStart -= OnGameStart;
-                }
+        private void UnSubscribe()
+        {
+            CoreGameSignals.Instance.OnLevelWin -= LevelWin;
+            CoreGameSignals.Instance.OnLevelFail -= LevelLose;
+            CoreGameSignals.Instance.OnGameStart -= OnGameStart;
+            CoreGameSignals.Instance.OnSave -= SetMoneyTexts;
+            CoreGameSignals.Instance.OnSave -= CheckButtonStats;
+        }
 
         #endregion
 
         private void CheckButtonStats()
         {
-            if (GameManager.JellyCount >= GameManager.JellyLimit)
+            JellyButtonCheck();
+            GridButton1Check();
+            GridButton2Check();
+            ExpandButton1Check();
+            ExpandButton2Check();
+            IncreaseButtonCheck();
+            ProgressCheck();
+        }
+
+        private void ProgressCheck()
+        {
+            _fillAmount = (float)GameManager.ClimbedStairs / GameManager.TargetClimb;
+            progressBar.fillAmount = _fillAmount;
+            progressText.text = "%" + GameManager.ClimbedStairs;
+        }
+
+        private void IncreaseButtonCheck()
+        {
+            if (GameManager.Money < 100000)
             {
-                addJellyButton.interactable = false;
+                increaseStairsButton.interactable = false;
             }
             else
             {
-                addJellyButton.interactable = true;
+                increaseStairsButton.interactable = true;
             }
         }
-        
+
+        private void ExpandButton2Check()
+        {
+            if (GameManager.Money < 50000)
+            {
+                expandButton2.interactable = false;
+            }
+            else
+            {
+                expandButton2.interactable = true;
+            }
+        }
+
+        private void ExpandButton1Check()
+        {
+            if (GameManager.Money < 10000)
+            {
+                expandButton1.interactable = false;
+            }
+            else
+            {
+                expandButton1.interactable = true;
+            }
+        }
+
+        private void GridButton2Check()
+        {
+            if (GameManager.Money < 5000)
+            {
+                gridButton1.interactable = false;
+            }
+            else
+            {
+                gridButton1.interactable = true;
+            }
+        }
+
+        private void GridButton1Check()
+        {
+            if (GameManager.Money < 2000)
+            {
+                gridButton1.interactable = false;
+            }
+            else
+            {
+                gridButton1.interactable = true;
+            }
+        }
+
+        private void JellyButtonCheck()
+        {
+            if (GameManager.JellyCount < GameManager.JellyLimit && _jellyPrice <= GameManager.Money)
+            {
+                addJellyButton.interactable = true;
+            }
+            else
+            {
+                addJellyButton.interactable = false;
+            }
+
+            jellyButtonText.text = "$" + _jellyPrice;
+        }
+
         private void OnGameStart()
         {
             mainPanel.SetActive(false);
@@ -129,7 +219,30 @@ namespace _YabuGames.Scripts.Managers
             {
                 if (t)
                 {
-                    t.text = "$" + GameManager.Money;
+                    if (GameManager.Money >= 1000) 
+                    {
+                        var thousand = Mathf.FloorToInt(GameManager.Money / 1000);
+                        var hundred = Mathf.FloorToInt(GameManager.Money % 1000);
+                        
+                        hundred = Mathf.FloorToInt(hundred / 100);
+
+                        t.text = "$ " + thousand + "." + hundred + "k";
+                    }
+
+                    if (GameManager.Money>=1000000)
+                    {
+                        var million = Mathf.FloorToInt(GameManager.Money / 1000000);
+                        var thousand = Mathf.FloorToInt(GameManager.Money % 1000000);
+                        
+                        thousand = Mathf.FloorToInt(thousand / 100);
+
+                        t.text = "$ " + million + "." + thousand + "m";
+                    }
+                    else
+                    {
+                        t.text = "$ " + (int)GameManager.Money;
+                    }
+                    
                 }
             }
         }
@@ -147,31 +260,68 @@ namespace _YabuGames.Scripts.Managers
             HapticManager.Instance.PlayFailureHaptic();
         }
 
+        private void DisableButton(Transform button)
+        {
+            Destroy(button.gameObject);
+        }
+
+        public void CheatButton()
+        {
+            GameManager.Money += 1000000;
+            CheckButtonStats();
+        }
+
+        public void ResetButton()
+        {
+            SceneManager.LoadScene(0);
+        }
         public void JellyButton()
         {
             GameManager.Instance.AddJelly();
+            _jellyPrice *= 2;
             CheckButtonStats();
         }
 
         public void OpenGridButton(Transform grid)
         {
             GameManager.Instance.SetGrid(grid,false);
+            GameManager.JellyLimit++;
+            GameManager.BoughtGrid++;
+            if (GameManager.BoughtGrid==1)
+            {
+                GameManager.Money -= 2000;
+                gridButton1.interactable = false;
+                gridButton2.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameManager.Money -= 5000;
+            }
+
             grid.gameObject.SetActive(true);
+            CheckButtonStats();
         }
 
         public void DisableGridButton(Transform gridButton)
         {
-            gridButton.gameObject.SetActive(false);
+            gridButton.DOScale(Vector3.zero, .5f).SetEase(Ease.InBack).OnComplete(() => DisableButton(gridButton));
         }
 
         public void HorizontalExpand()
         {
             GameManager.Instance.HorizontalExpand();
+            if (GameManager.Instance.horizontalLevel==1)
+            {
+                expandButton2.gameObject.SetActive(true);
+                expandButton2.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack).SetDelay(.5f);
+            }
+            CheckButtonStats();
         }
 
         public void VerticalExpand()
         {
             GameManager.Instance.VerticalExpand();
+            CheckButtonStats();
         }
         
 

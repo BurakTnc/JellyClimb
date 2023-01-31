@@ -57,7 +57,7 @@ namespace _YabuGames.Scripts.Controllers
             _jellyController.DragEffect();
             JellySignals.Instance.OnDragStart?.Invoke();
             if (Camera.main != null)
-                _difference = (Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)+Vector3.back*.5f);
+                _difference = (Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)+Vector3.back*1f);
         }
 
         private void OnMouseDrag()

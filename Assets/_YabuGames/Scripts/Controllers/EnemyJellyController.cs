@@ -40,12 +40,12 @@ namespace _YabuGames.Scripts.Controllers
             
         }
 
-        public void AllyMerge(int empty)
+        public void AllyMerge(int takenLevel, IInteractable script)
         {
             
         }
 
-        public void TempMerge()
+        public void TempMerge(int takenLevel)
         {
             _transform.DOScale(Vector3.zero, .4f).SetEase(Ease.OutSine).SetDelay(.2f).OnComplete(DisAppear);
         }

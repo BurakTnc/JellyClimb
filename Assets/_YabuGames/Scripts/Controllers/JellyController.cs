@@ -5,6 +5,7 @@ using _YabuGames.Scripts.Signals;
 using DG.Tweening;
 using Dreamteck.Splines;
 using JellyCube;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,7 +19,8 @@ namespace _YabuGames.Scripts.Controllers
         [SerializeField] private Vector3 growingSize;
         [SerializeField] private int maxLevel = 10;
         [SerializeField] private Transform splashPosition, groundSplashPosition;
-        [SerializeField] private Material _material;
+        [SerializeField] private Material[] materials;
+        [SerializeField] private TextMeshPro levelText;
         
         private bool _onMove;
         private bool _onMerge;
@@ -69,12 +71,14 @@ namespace _YabuGames.Scripts.Controllers
         {
             JellySignals.Instance.OnDragStart += StopMoving;
             JellySignals.Instance.OnDragEnd += BeginMoving;
+            JellySignals.Instance.OnStairUp += SetStepLimit;
         }
 
         private void UnSubscribe()
         {
             JellySignals.Instance.OnDragStart -= StopMoving;
             JellySignals.Instance.OnDragEnd -= BeginMoving;
+            JellySignals.Instance.OnStairUp -= SetStepLimit;
         }
         #endregion
 
@@ -109,7 +113,18 @@ namespace _YabuGames.Scripts.Controllers
         {
             _stepLimit = GameManager.Instance.stepLimit;
             _onMove = true;
+            mesh.GetComponent<MeshRenderer>().material.color = materials[_level-1].color;
+            levelText.text = _level.ToString();
         }
+
+        private void SetMaterialAndLevel()
+        {
+            levelText.text = _level.ToString();
+            mesh.GetComponent<MeshRenderer>().material.DOColor(materials[_level - 1].color, 1.5f).SetEase(Ease.OutBack);
+
+        }
+            
+    
 
         private void StopMoving()
         {
@@ -148,42 +163,44 @@ namespace _YabuGames.Scripts.Controllers
             }
             else
             {
-                mesh.GetComponent<MeshRenderer>().material.DOColor(_material.color, 1.5f);
-                script.TempMerge();
-                if (_level >= maxLevel)  return;
-                _ableToDrag = false;
-                var seq = DOTween.Sequence();
-                _onMerge = true;
-                _level += takenLevel;
-                _heightValue = growingSize.x * takenLevel;
-                var mergedScale = _currentScale + (growingSize * takenLevel);
-                var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
-                _currentScale = mergedScale;
-                seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
-                seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
-                seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+                script.TempMerge(takenLevel);
+                GameManager.ClimbedStairs += 5;
+                // if (_level >= maxLevel)  return;
+                // _ableToDrag = false;
+                // var seq = DOTween.Sequence();
+                // _onMerge = true;
+                // _level += takenLevel;
+                // _heightValue = growingSize.x * takenLevel;
+                // var mergedScale = _currentScale + (growingSize * takenLevel);
+                // var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
+                // _currentScale = mergedScale;
+                // seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
+                // seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
+                // seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
             }
 
             
         }
 
-        public void AllyMerge(int takenLevel)
+        public void AllyMerge( int takenLevel,IInteractable script)
         {
-            if (_level >= maxLevel)  return;
-            
+            if (_level >= 7 || _level!=takenLevel)
+                return;
+            script.TempMerge(takenLevel);
             _ableToDrag = false;
             var seq = DOTween.Sequence();
             _onMerge = true;
-            _level += takenLevel;
-            _heightValue += (growingSize.x * takenLevel);
-            var mergedScale = _currentScale + (growingSize * takenLevel);
+            _level ++;
+            SetMaterialAndLevel();
+            _heightValue += growingSize.x;
+            var mergedScale = _currentScale + growingSize;
             var meshScale = meshParent.localScale;
             var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3f, meshScale.z);
             _currentScale = mergedScale;
             seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
             seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
             seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
-            
+
         }
 
         private void MergeDone()
@@ -200,6 +217,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void PullParticles()
         {
+            PoolManager.Instance.GetIncomeTextParticle(transform.position+new Vector3(.7f,0,-1),_level);
             PoolManager.Instance.GetSplashParticle(splashPosition.position);
             if (_stepCount != _stepLimit + 1) 
                   PoolManager.Instance.GetGroundSplashParticle(groundSplashPosition.position);
@@ -210,8 +228,18 @@ namespace _YabuGames.Scripts.Controllers
             BandController.Instance.GetBand(_jellySplineController);
         }
 
+        private void SetStepLimit(int limit)
+        {
+            _stepLimit = limit;
+        }
         private void Climb()
         {
+            CoreGameSignals.Instance.OnSave?.Invoke();
+            if (GameManager.ClimbedStairs<100)
+            {
+                GameManager.ClimbedStairs++;
+            }
+            
             var currentScale = _transform.localScale;
             var desiredScale = new Vector3(currentScale.x * 1.1f, currentScale.y/1.1f, currentScale.z/1.1f);
             var climbPosition= new Vector3(0, 1, 2);
@@ -250,6 +278,7 @@ namespace _YabuGames.Scripts.Controllers
         private void OnClimbFinish()
         {
             PullParticles();
+            GameManager.Money += _level;
             var scale = _transform.localScale;
             var desiredScale = new Vector3(scale.x / 1.1f, scale.y*1.1f, scale.z*1.1f);
             _transform.DOScale(desiredScale, .25f).SetEase(Ease.InSine).OnComplete(EnableMovement);
@@ -258,7 +287,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void EnableMovement()
         {
-            if (_stepCount==6)
+            if (_stepCount==_stepLimit+1)
             {
                 GetOnBand();
                  return;
@@ -302,7 +331,7 @@ namespace _YabuGames.Scripts.Controllers
         }
 
         #region Public Methods
-
+        
         public void SetIdleGrid(Transform grid)
         {
             if (_currentGrid)
@@ -365,10 +394,13 @@ namespace _YabuGames.Scripts.Controllers
         {
             _ableToDrag = false;
         }
-        public void TempMerge()
+        public void TempMerge(int takenLevel)
         {
+            //if (takenLevel+1 != _level) return;
+  
             GameManager.JellyCount--;
             GameManager.Instance.SetGrid(_currentGrid,false);
+            transform.DOKill();
             Destroy(gameObject);
         }
         public int GetLevel()
