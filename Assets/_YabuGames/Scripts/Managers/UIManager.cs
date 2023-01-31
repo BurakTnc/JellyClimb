@@ -1,6 +1,7 @@
 using System;
 using _YabuGames.Scripts.Signals;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,14 @@ namespace _YabuGames.Scripts.Managers
         
         [SerializeField] private GameObject mainPanel, gamePanel, winPanel, losePanel, storePanel;
         [SerializeField] private TextMeshProUGUI[] moneyText;
-        [SerializeField] private Button addJellyButton, incomeButton, increaseStairsButton, expandButton;
+
+        [SerializeField] private Button addJellyButton,
+            incomeButton,
+            increaseStairsButton,
+            expandButton1,
+            expandButton2,
+            gridButton1,
+            gridButton2;
 
         private int _jellyPrice, _incomePrice, _increasePrice, _expandPrice;
         private int _jellyLevel, _incomeLevel, _increaseLevel, _expandLevel;
@@ -97,7 +105,14 @@ namespace _YabuGames.Scripts.Managers
 
         private void CheckButtonStats()
         {
-            
+            if (GameManager.JellyCount >= GameManager.JellyLimit)
+            {
+                addJellyButton.interactable = false;
+            }
+            else
+            {
+                addJellyButton.interactable = true;
+            }
         }
         
         private void OnGameStart()
@@ -135,7 +150,30 @@ namespace _YabuGames.Scripts.Managers
         public void JellyButton()
         {
             GameManager.Instance.AddJelly();
+            CheckButtonStats();
         }
+
+        public void OpenGridButton(Transform grid)
+        {
+            GameManager.Instance.SetGrid(grid,false);
+            grid.gameObject.SetActive(true);
+        }
+
+        public void DisableGridButton(Transform gridButton)
+        {
+            gridButton.gameObject.SetActive(false);
+        }
+
+        public void HorizontalExpand()
+        {
+            
+        }
+
+        public void VerticalExpand()
+        {
+            
+        }
+        
 
         public void MenuButton()
         {

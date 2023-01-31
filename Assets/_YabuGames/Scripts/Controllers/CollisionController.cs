@@ -89,7 +89,7 @@ namespace _YabuGames.Scripts.Controllers
                 case "Grid":
                     if (_onDrag)
                     {
-                        GameManager.Instance.SetGrid(other.transform,false);
+                        //GameManager.Instance.SetGrid(other.transform,false);
                     }
                     break;
             }
@@ -119,14 +119,15 @@ namespace _YabuGames.Scripts.Controllers
 
                         _allyMerge = false;
                         _onFirstMove = false;
-                        GameManager.Instance.SetGrid(other.transform,true);
+                        //GameManager.Instance.SetGrid(other.transform,true);
+                        _jellyController.SetIdleGrid(other.transform);
                     }
                     break;
                 case "StartGrid":
                     if (_onDrag)
                     {
                         if(!_allyMerge) return;
-
+                        
                         _allyMerge = false;
                         _jellyController.SetStartGrid(other.transform);
                     }

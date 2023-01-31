@@ -161,7 +161,7 @@ MonoBehaviour:
   maxLevel: 10
   splashPosition: {fileID: 8565129433208110682}
   groundSplashPosition: {fileID: 8565129433156711334}
-  _material: {fileID: 0}
+  _material: {fileID: 2100000, guid: 516530e7ac2f6434ba6ec95d91b1966f, type: 2}
 --- !u!114 &8565129432266355813
 MonoBehaviour:
   m_ObjectHideFlags: 0

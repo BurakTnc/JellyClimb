@@ -27,6 +27,8 @@ namespace _YabuGames.Scripts.Controllers
         private bool _isStarted = false;
 
         private Transform _transform;
+        private Transform _currentGrid;
+        private Transform _currentStartGrid;
         
         private float _timer;
         private float _heightValue;
@@ -83,7 +85,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Update()
         {
-            if(_isStarted) return;
+            if(!_isStarted) return;
             CheckInput();
         }
         
@@ -173,7 +175,7 @@ namespace _YabuGames.Scripts.Controllers
             var seq = DOTween.Sequence();
             _onMerge = true;
             _level += takenLevel;
-            _heightValue += (growingSize.x * takenLevel) / 2;
+            _heightValue += (growingSize.x * takenLevel);
             var mergedScale = _currentScale + (growingSize * takenLevel);
             var meshScale = meshParent.localScale;
             var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3f, meshScale.z);
@@ -189,7 +191,7 @@ namespace _YabuGames.Scripts.Controllers
             _collisionController.AllowEnemyMerging();
             PoolManager.Instance.GetSplashParticle(splashPosition.position );
             JellySignals.Instance.OnAbleToMerge?.Invoke();
-            _timer += .5f;
+            _timer += .35f;
             _onMerge = false;
             _ableToDrag = true;
             _onMove = false;
@@ -224,12 +226,12 @@ namespace _YabuGames.Scripts.Controllers
             if (_stepCount==_stepLimit)
             {
                 desiredPosition = bandPosition;
+                
             }
             else
             {
                 desiredPosition = climbPosition;
             }
-            
 
             _onMove = true;
             _ableToDrag = false;
@@ -301,15 +303,35 @@ namespace _YabuGames.Scripts.Controllers
 
         #region Public Methods
 
-        public void SetIdleGrid()
+        public void SetIdleGrid(Transform grid)
         {
-            _transform.position += new Vector3(0, _currentScale.x, .5f);
-            _startGrid = transform.position;
-            _oldPosition = transform.position;
+            if (_currentGrid)
+            {
+                GameManager.Instance.SetGrid(_currentGrid,false);
+            }
+
+            if (_currentStartGrid)
+            {
+                _currentStartGrid.GetComponent<BoxCollider>().enabled = true;
+            }
+            _currentGrid = grid;
+            GameManager.Instance.SetGrid(_currentGrid,true);
+            _stepCount = 0;
+            var position = grid.position;
+            position += new Vector3(0, _currentScale.x, _currentScale.x/1.5f);
+            _transform.position = position;
+            _startGrid = position;
+            _oldPosition = position;
+            _isStarted = false;
         }
         public void SetStartGrid(Transform grid)
         {
-            var position = _transform.position;
+            GameManager.Instance.SetGrid(_currentGrid,false);
+            _currentStartGrid = grid;
+            _currentStartGrid.GetComponent<BoxCollider>().enabled = false;
+            _timer = 0;
+            _stepCount = 0;
+            var position = grid.position;
             position += new Vector3(0, _currentScale.x, .5f);
             _transform.position = position;
             _startGrid = position;
@@ -345,6 +367,8 @@ namespace _YabuGames.Scripts.Controllers
         }
         public void TempMerge()
         {
+            GameManager.JellyCount--;
+            GameManager.Instance.SetGrid(_currentGrid,false);
             Destroy(gameObject);
         }
         public int GetLevel()

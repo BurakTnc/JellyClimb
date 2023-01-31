@@ -13,14 +13,16 @@ namespace _YabuGames.Scripts.Managers
     {
         public static GameManager Instance;
         public static int Money;
-
+        public static int JellyCount;
+        public static int JellyLimit = 3;
+        
         public List<Transform> emptyGrids = new List<Transform>();
         public List<Transform> occupiedGrids = new List<Transform>();
         public int stairsLevel = 1;
         public int stepLimit;
         
         [SerializeField] private int[] maxStepCounts;
-        
+
         
 
         private void Awake()
@@ -81,13 +83,13 @@ namespace _YabuGames.Scripts.Managers
 
         private void SpawnJellies()
         {
-            for (int i = 0; i < emptyGrids.Count; i++)
+            for (int i = 0; i < 1; i++)
             {
                 var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
                 var script = temp.GetComponent<JellyController>();
                 temp.transform.position = emptyGrids[i].position;
-                script.SetIdleGrid();
-                Debug.Log("check");
+                script.SetIdleGrid(emptyGrids[i]);
+                JellyCount++;
             }
         }
 
@@ -101,20 +103,29 @@ namespace _YabuGames.Scripts.Managers
             if (isOccupied)
             {
                 emptyGrids.Remove(grid);
-                occupiedGrids.Add(grid);
+                if (!occupiedGrids.Contains(grid))
+                {
+                    occupiedGrids.Add(grid);
+                }
+                grid.GetComponent<BoxCollider>().enabled = false;
             }
             else
             {
                 occupiedGrids.Remove(grid);
-                emptyGrids.Add(grid);
+                if (!emptyGrids.Contains(grid))
+                {
+                    emptyGrids.Add(grid);
+                }
+                grid.GetComponent<BoxCollider>().enabled = true;
             }
         }
         public void AddJelly()
         {
             var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
-            temp.transform.localScale=Vector3.zero;
-            temp.transform.position = emptyGrids[Random.Range(0, emptyGrids.Count)].position;
-            temp.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack);
+            var script = temp.GetComponent<JellyController>();
+            temp.transform.position = emptyGrids[0].position;
+            script.SetIdleGrid(emptyGrids[0]);
+            JellyCount++;
         }
 
         public void ArrangeMoney(int value)

@@ -33,13 +33,18 @@ namespace _YabuGames.Scripts.Controllers
             _isGrabbing = grabbing;
         }
 
+        private void MoveDelay()
+        {
+            _jellyController.GoToPrevPosition();
+        }
+
         private void OnMouseUp()
         {
             if(!_isGrabbing) return;
             CoreGameSignals.Instance.OnDragging?.Invoke(false);
             _collisionController.AllowAllyMerging();
             JellySignals.Instance.OnDragEnd?.Invoke();
-            _jellyController.GoToPrevPosition();
+            Invoke(nameof(MoveDelay), .1f);
             _jellyController.FinishDragEffect();
         }
 
@@ -52,7 +57,7 @@ namespace _YabuGames.Scripts.Controllers
             _jellyController.DragEffect();
             JellySignals.Instance.OnDragStart?.Invoke();
             if (Camera.main != null)
-                _difference = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+                _difference = (Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)+Vector3.back*.5f);
         }
 
         private void OnMouseDrag()
