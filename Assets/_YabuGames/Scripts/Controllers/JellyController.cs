@@ -24,6 +24,7 @@ namespace _YabuGames.Scripts.Controllers
         private bool _onMerge;
         private bool _ableToDrag = true;
         private bool _isBlocked = false;
+        private bool _isStarted = false;
 
         private Transform _transform;
         
@@ -82,6 +83,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void Update()
         {
+            if(_isStarted) return;
             CheckInput();
         }
         
@@ -89,7 +91,7 @@ namespace _YabuGames.Scripts.Controllers
         {
             _transform = transform;
             _collider = GetComponent<BoxCollider>();
-            _timer += (coolDown + Random.Range(0.1f, 1f)); //???
+            //_timer += (coolDown + Random.Range(0.1f, 1f)); //???
             _rubberEffect = GetComponentInChildren<RubberEffect>();
             _currentScale = meshParent.localScale;
             _collisionController = GetComponent<CollisionController>();
@@ -262,6 +264,7 @@ namespace _YabuGames.Scripts.Controllers
             _oldPosition = _transform.position;
             _onMove = false;
             _ableToDrag = true;
+            _isStarted = true;
         }
         
         private void Disappear()
@@ -306,7 +309,9 @@ namespace _YabuGames.Scripts.Controllers
         }
         public void SetStartGrid(Transform grid)
         {
-            var position = grid.position;
+            var position = _transform.position;
+            position += new Vector3(0, _currentScale.x, .5f);
+            _transform.position = position;
             _startGrid = position;
             _oldPosition = position;
             EnableMovement();

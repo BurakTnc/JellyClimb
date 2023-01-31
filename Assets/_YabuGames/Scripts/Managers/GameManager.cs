@@ -83,10 +83,11 @@ namespace _YabuGames.Scripts.Managers
         {
             for (int i = 0; i < emptyGrids.Count; i++)
             {
-                GameObject temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
+                var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
                 var script = temp.GetComponent<JellyController>();
                 temp.transform.position = emptyGrids[i].position;
                 script.SetIdleGrid();
+                Debug.Log("check");
             }
         }
 
@@ -110,7 +111,7 @@ namespace _YabuGames.Scripts.Managers
         }
         public void AddJelly()
         {
-            GameObject temp = Resources.Load<GameObject>("Spawnables/Jelly");
+            var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
             temp.transform.localScale=Vector3.zero;
             temp.transform.position = emptyGrids[Random.Range(0, emptyGrids.Count)].position;
             temp.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack);

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="" />
+    <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/Examples.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/PlaymakerActions.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/TMPro.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/JMO Assets/Toony Colors Pro/Demo TCP2/Cat Demo URP.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,10 +17,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/Desktop/Unity Assets/Unity Assets/Scripts/Grabber.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/buraktunc/Documents/GitHub/JellyClimb/Assets/_YabuGames/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/buraktunc/Documents/GitHub/JellyClimb/Assets/_YabuGames/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/buraktunc/Documents/GitHub/JellyClimb/Assets/_YabuGames/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/buraktunc/Documents/GitHub/JellyClimb/Assets/_YabuGames/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity Projects/Jelly/Assets/_Scripts/EnemyJellyController.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -90,6 +94,7 @@
       <workItem from="1674807248867" duration="23216000" />
       <workItem from="1675070353242" duration="13386000" />
       <workItem from="1675094737241" duration="4892000" />
+      <workItem from="1675153634845" duration="955000" />
     </task>
     <servers />
   </component>
