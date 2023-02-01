@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/Desktop/Unity Assets/Unity Assets/Scripts/Grabber.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/Unity Projects/Jelly/Assets/_Scripts/EnemyJellyController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/wkspaces/Pirates!/Assets/_Scripts/EnemyHealthUI.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -94,6 +90,7 @@
       <workItem from="1675198258191" duration="37000" />
       <workItem from="1675198425361" duration="126000" />
       <workItem from="1675200588141" duration="91000" />
+      <workItem from="1675253039318" duration="117000" />
     </task>
     <servers />
   </component>

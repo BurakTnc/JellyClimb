@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
-    value: 0
+    value: 1
   mode:
     overrideState: 0
     value: 1
   intensity:
-    overrideState: 0
+    overrideState: 1
     value: 0.17
   color:
     overrideState: 0
@@ -77,16 +77,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
-    value: 0
+    value: 1
   mode:
     overrideState: 1
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.3922214, g: 0.5640352, b: 0.735849, a: 1}
+    value: {r: 0.17577429, g: 0.17814855, b: 0.4716981, a: 1}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
