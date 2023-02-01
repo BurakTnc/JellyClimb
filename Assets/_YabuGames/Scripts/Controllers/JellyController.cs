@@ -164,7 +164,7 @@ namespace _YabuGames.Scripts.Controllers
             else
             {
                 script.TempMerge(takenLevel);
-                GameManager.ClimbedStairs += 5;
+                GameManager.Instance.ClimbedStairs += 5;
                 // if (_level >= maxLevel)  return;
                 // _ableToDrag = false;
                 // var seq = DOTween.Sequence();
@@ -193,10 +193,10 @@ namespace _YabuGames.Scripts.Controllers
             _level ++;
             HapticManager.Instance.PlayWarningHaptic();
             SetMaterialAndLevel();
-            _heightValue += growingSize.x;
+            _heightValue += growingSize.x/2;
             var mergedScale = _currentScale + growingSize;
             var meshScale = meshParent.localScale;
-            var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3f, meshScale.z);
+            var effectScale = new Vector3(meshScale.x*1.1f, meshScale.y * 3.5f, meshScale.z);
             _currentScale = mergedScale;
             seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
             seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
@@ -219,12 +219,16 @@ namespace _YabuGames.Scripts.Controllers
 
         private void PullParticles()
         {
-            var groundSplash = Instantiate(Resources.Load<GameObject>($"Particles/ground/ground{_level}"));
+            
             var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
             splash.transform.position = splashPosition.position;
             PoolManager.Instance.GetIncomeTextParticle(transform.position+new Vector3(.7f,0,-1),_level);
-            if (_stepCount != _stepLimit + 1) 
+            if (_stepCount != _stepLimit + 1)
+            {
+                var groundSplash = Instantiate(Resources.Load<GameObject>($"Particles/ground/ground{_level}"));
                 groundSplash.transform.position = groundSplashPosition.position;
+            }
+                
         }
 
         private void GetOnBand()
@@ -239,9 +243,9 @@ namespace _YabuGames.Scripts.Controllers
         private void Climb()
         {
             CoreGameSignals.Instance.OnSave?.Invoke();
-            if (GameManager.ClimbedStairs<100)
+            if (GameManager.Instance.ClimbedStairs<100)
             {
-                GameManager.ClimbedStairs++;
+                GameManager.Instance.ClimbedStairs++;
             }
             
             var currentScale = _transform.localScale;
@@ -361,6 +365,10 @@ namespace _YabuGames.Scripts.Controllers
         public void SetStartGrid(Transform grid)
         {
             GameManager.Instance.SetGrid(_currentGrid,false);
+            if (_currentStartGrid)
+            {
+                _currentStartGrid.GetComponent<BoxCollider>().enabled = true;
+            }
             _currentStartGrid = grid;
             _currentStartGrid.GetComponent<BoxCollider>().enabled = false;
             _timer = 0;
@@ -402,10 +410,15 @@ namespace _YabuGames.Scripts.Controllers
         }
         public void TempMerge(int takenLevel)
         {
-            //if (takenLevel+1 != _level) return;
-  
-            GameManager.JellyCount--;
+            
+            
+            if (_currentStartGrid)
+            {
+                _currentStartGrid.GetComponent<BoxCollider>().enabled = true;
+            }
+            GameManager.Instance.JellyCount--;
             GameManager.Instance.SetGrid(_currentGrid,false);
+            CoreGameSignals.Instance.OnSave?.Invoke();
             transform.DOKill();
             Destroy(gameObject);
         }

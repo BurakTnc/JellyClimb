@@ -415,7 +415,7 @@ MonoBehaviour:
   mesh: {fileID: 8565129431816990883}
   meshParent: {fileID: 8565129432676852403}
   coolDown: 0.8
-  growingSize: {x: 0.1, y: 0.1, z: 0.1}
+  growingSize: {x: 0.05, y: 0.05, z: 0.05}
   maxLevel: 7
   splashPosition: {fileID: 8565129433208110682}
   groundSplashPosition: {fileID: 8565129433156711334}

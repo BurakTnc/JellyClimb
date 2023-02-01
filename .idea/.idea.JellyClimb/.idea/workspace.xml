@@ -3,32 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="904d00df-1081-439c-b3a3-781dedf4368e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JellyClimb/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BandTex.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BandTex.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash3.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash4.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash5.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash5.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash6.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash7.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Particles/splash/Splash7.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Spawnables/Block.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Spawnables/Block.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/Examples.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/PlaymakerActions.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Dreamteck/Splines/TMPro.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/JMO Assets/Toony Colors Pro/Demo TCP2/Cat Demo URP.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Spawnables/Jelly.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Spawnables/Jelly.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignTest.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandTex.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/BandTex.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 1.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 1.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 2.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 2.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 3.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 4.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 4.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 5.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 5.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 6.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat 6.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Materials/JellyMat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Controllers/JellyController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_YabuGames/Scripts/Managers/UIManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/Desktop/Unity Assets/Unity Assets/Scripts/Grabber.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Unity Projects/Jelly/Assets/_Scripts/EnemyJellyController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/wkspaces/Pirates!/Assets/_Scripts/EnemyHealthUI.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

@@ -17,6 +17,7 @@ namespace _YabuGames.Scripts.Managers
         [SerializeField] private TextMeshProUGUI[] moneyText;
         [SerializeField] private TextMeshProUGUI jellyButtonText, progressText;
         [SerializeField] private Image progressBar;
+        [SerializeField] private GameObject startGrid1, startGrid2;
 
         [SerializeField] private Button addJellyButton,
             incomeButton,
@@ -92,6 +93,11 @@ namespace _YabuGames.Scripts.Managers
             CheckButtonStats();
         }
 
+        private void Update()
+        {
+            //CheckButtonStats();
+        }
+
         #region Subscribtions
         private void Subscribe()
         {
@@ -122,13 +128,14 @@ namespace _YabuGames.Scripts.Managers
             ExpandButton2Check();
             IncreaseButtonCheck();
             ProgressCheck();
+            SetMoneyTexts();
         }
 
         private void ProgressCheck()
         {
-            _fillAmount = (float)GameManager.ClimbedStairs / GameManager.TargetClimb;
+            _fillAmount = (float)GameManager.Instance.ClimbedStairs / GameManager.Instance.TargetClimb;
             progressBar.fillAmount = _fillAmount;
-            progressText.text = "%" + GameManager.ClimbedStairs;
+            progressText.text = "%" + GameManager.Instance.ClimbedStairs;
         }
 
         private void IncreaseButtonCheck()
@@ -193,7 +200,7 @@ namespace _YabuGames.Scripts.Managers
 
         private void JellyButtonCheck()
         {
-            if (GameManager.JellyCount < GameManager.JellyLimit && _jellyPrice <= GameManager.Money)
+            if (GameManager.Instance.JellyCount < GameManager.Instance.JellyLimit && _jellyPrice <= GameManager.Money)
             {
                 addJellyButton.interactable = true;
             }
@@ -201,8 +208,21 @@ namespace _YabuGames.Scripts.Managers
             {
                 addJellyButton.interactable = false;
             }
+            
+            if (_jellyPrice >= 1000) 
+            {
+                var thousand = Mathf.FloorToInt(_jellyPrice / 1000);
+                var hundred = Mathf.FloorToInt(_jellyPrice % 1000);
+                        
+                hundred = Mathf.FloorToInt(hundred / 100);
 
-            jellyButtonText.text = "$" + _jellyPrice;
+                jellyButtonText.text = "$ " + thousand + "." + hundred + "k";
+            }
+                    
+            else
+            {
+                jellyButtonText.text = "$ " + (int)_jellyPrice;
+            }
         }
 
         private void OnGameStart()
@@ -219,7 +239,17 @@ namespace _YabuGames.Scripts.Managers
             {
                 if (t)
                 {
-                    if (GameManager.Money >= 1000) 
+                    if (GameManager.Money>=1000000)
+                    {
+                        var million = Mathf.FloorToInt(GameManager.Money / 1000000);
+                        var thousand = Mathf.FloorToInt(GameManager.Money % 1000000);
+                        
+                        thousand = Mathf.FloorToInt(thousand / 1000);
+
+                        t.text = "$ " + million + "." + thousand + "m";
+                        return;
+                    }
+                    if (GameManager.Money >= 1000 && GameManager.Money<1000000) 
                     {
                         var thousand = Mathf.FloorToInt(GameManager.Money / 1000);
                         var hundred = Mathf.FloorToInt(GameManager.Money % 1000);
@@ -228,16 +258,7 @@ namespace _YabuGames.Scripts.Managers
 
                         t.text = "$ " + thousand + "." + hundred + "k";
                     }
-
-                    if (GameManager.Money>=1000000)
-                    {
-                        var million = Mathf.FloorToInt(GameManager.Money / 1000000);
-                        var thousand = Mathf.FloorToInt(GameManager.Money % 1000000);
-                        
-                        thousand = Mathf.FloorToInt(thousand / 100);
-
-                        t.text = "$ " + million + "." + thousand + "m";
-                    }
+                    
                     else
                     {
                         t.text = "$ " + (int)GameManager.Money;
@@ -274,6 +295,7 @@ namespace _YabuGames.Scripts.Managers
 
         public void ResetButton()
         {
+            PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(0);
         }
         public void JellyButton()
@@ -288,9 +310,9 @@ namespace _YabuGames.Scripts.Managers
         public void OpenGridButton(Transform grid)
         {
             GameManager.Instance.SetGrid(grid,false);
-            GameManager.JellyLimit++;
-            GameManager.BoughtGrid++;
-            if (GameManager.BoughtGrid==1)
+            GameManager.Instance.JellyLimit++;
+            GameManager.Instance.BoughtGrid++;
+            if (GameManager.Instance.BoughtGrid==1)
             {
                 GameManager.Money -= 2000;
                 gridButton1.interactable = false;
@@ -319,10 +341,12 @@ namespace _YabuGames.Scripts.Managers
                 GameManager.Money -= 10000;
                 expandButton2.gameObject.SetActive(true);
                 expandButton2.transform.DOScale(Vector3.one, .5f).SetEase(Ease.OutBack).SetDelay(.5f);
+                startGrid1.SetActive(true);
             }
             else
             {
                 GameManager.Money -= 50000;
+                startGrid2.SetActive(true);
             }
             HapticManager.Instance.PlayLightHaptic();
             CheckButtonStats();

@@ -13,11 +13,11 @@ namespace _YabuGames.Scripts.Managers
     {
         public static GameManager Instance;
         public static int Money;
-        public static int JellyCount;
-        public static int JellyLimit = 3;
-        public static int BoughtGrid = 0;
-        public static int ClimbedStairs = 1;
-        public static int TargetClimb;
+        public int JellyCount;
+        public  int JellyLimit = 3;
+        public  int BoughtGrid = 0;
+        public  int ClimbedStairs = 1;
+        public int TargetClimb;
         
         public List<Transform> emptyGrids = new List<Transform>();
         public List<Transform> occupiedGrids = new List<Transform>();
