@@ -209,7 +209,7 @@ namespace _YabuGames.Scripts.Managers
 
         private void Haptic()
         {
-            HapticManager.Instance.PlaySelectionHaptic();
+            HapticManager.Instance.PlayLightHaptic();
         }
         public void HorizontalExpand()
         {
