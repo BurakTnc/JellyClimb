@@ -243,7 +243,7 @@ namespace _YabuGames.Scripts.Controllers
         private void Climb()
         {
             CoreGameSignals.Instance.OnSave?.Invoke();
-            if (GameManager.Instance.ClimbedStairs<100)
+            if (GameManager.Instance.ClimbedStairs<600)
             {
                 GameManager.Instance.ClimbedStairs++;
             }

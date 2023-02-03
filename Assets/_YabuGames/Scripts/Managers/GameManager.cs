@@ -17,7 +17,7 @@ namespace _YabuGames.Scripts.Managers
         public  int JellyLimit = 3;
         public  int BoughtGrid = 0;
         public  int ClimbedStairs = 1;
-        public int TargetClimb;
+        public int TargetClimb = 600;
         
         public List<Transform> emptyGrids = new List<Transform>();
         public List<Transform> occupiedGrids = new List<Transform>();

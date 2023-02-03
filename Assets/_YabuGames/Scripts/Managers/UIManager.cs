@@ -15,7 +15,7 @@ namespace _YabuGames.Scripts.Managers
         
         [SerializeField] private GameObject mainPanel, gamePanel, winPanel, losePanel, storePanel;
         [SerializeField] private TextMeshProUGUI[] moneyText;
-        [SerializeField] private TextMeshProUGUI jellyButtonText, progressText;
+        [SerializeField] private TextMeshProUGUI jellyButtonText, progressText, levelText;
         [SerializeField] private Image progressBar;
         [SerializeField] private GameObject startGrid1, startGrid2;
 
@@ -31,6 +31,7 @@ namespace _YabuGames.Scripts.Managers
         private int _jellyPrice, _incomePrice, _increasePrice, _expandPrice;
         private int _jellyLevel, _incomeLevel, _increaseLevel, _expandLevel;
         private float _fillAmount;
+        private int _level = 1;
 
         private void Awake()
         {
@@ -133,9 +134,21 @@ namespace _YabuGames.Scripts.Managers
 
         private void ProgressCheck()
         {
-            _fillAmount = (float)GameManager.Instance.ClimbedStairs / GameManager.Instance.TargetClimb;
+            if (GameManager.Instance.ClimbedStairs==300)
+            {
+                LevelUp(); 
+                return;
+            }
+            _fillAmount = (float)GameManager.Instance.ClimbedStairs / 300;
             progressBar.fillAmount = _fillAmount;
-            progressText.text = "%" + GameManager.Instance.ClimbedStairs;
+            progressText.text = "%" + (int)(_fillAmount * 100);
+            levelText.text = "LEVEL " + _level;
+        }
+
+        private void LevelUp()
+        {
+            _level++;
+            GameManager.Instance.ClimbedStairs = 0;
         }
 
         private void IncreaseButtonCheck()
