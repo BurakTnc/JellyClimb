@@ -209,7 +209,7 @@ namespace _YabuGames.Scripts.Controllers
             
             var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
             splash.transform.position = splashPosition.position;
-            PoolManager.Instance.GetIncomeTextParticle(transform.position+new Vector3(.7f,0,-1),_level);
+            PoolManager.Instance.GetIncomeTextParticle(transform.position+new Vector3(.7f,0,-1),_level*2);
             if (_stepCount != _stepLimit + 1)
             {
                 var groundSplash = Instantiate(Resources.Load<GameObject>($"Particles/ground/ground{_level}"));
