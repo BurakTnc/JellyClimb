@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using _YabuGames.Scripts.Controllers;
 using _YabuGames.Scripts.Signals;
@@ -27,11 +28,13 @@ namespace _YabuGames.Scripts.Managers
         
         [SerializeField] private int[] maxStepCounts;
         [SerializeField] private float[] xPosReferences, yPosReferences;
-        
+
+        private List<JellyController> _jellyList = new List<JellyController>();
         private float _verticalReference, _horizontalReference;
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
             #region Singleton
 
             if (Instance != this && Instance != null)
@@ -71,9 +74,9 @@ namespace _YabuGames.Scripts.Managers
 
         #endregion
 
-        private void Start()
+        private IEnumerator Start()
         {
-            Application.targetFrameRate = 60;
+            yield return new WaitForSeconds(.5f);
             SpawnJellies();
             
         }
@@ -81,6 +84,11 @@ namespace _YabuGames.Scripts.Managers
         private void GetValues()
         {
             Money = PlayerPrefs.GetInt("money", 0);
+            JellyCount=PlayerPrefs.GetInt("jellyCount",1);
+            TargetClimb = PlayerPrefs.GetInt("targetClimb", 1);
+            ClimbedStairs = PlayerPrefs.GetInt("climbedStairs", 0);
+            //JellyLimit = PlayerPrefs.GetInt("jellyLimit", 3);
+            BoughtGrid = PlayerPrefs.GetInt("boughtGrid", 0);
         }
 
         private void SetValues()
@@ -129,19 +137,31 @@ namespace _YabuGames.Scripts.Managers
 
         private void SpawnJellies()
         {
-            for (int i = 0; i < 1; i++)
+            var count = JellyCount;
+            for (int i = 0; i < count; i++)
             {
                 var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
                 var script = temp.GetComponent<JellyController>();
-                temp.transform.position = emptyGrids[i].position;
-                script.SetIdleGrid(emptyGrids[i]);
-                JellyCount++;
+                temp.transform.position = emptyGrids[0].position;
+                script.SetIdleGrid(emptyGrids[0]);
+                script.SetLevel(PlayerPrefs.GetInt($"jelly{i}", 1));
+                _jellyList.Add(script);
+                JellyLimit--;
             }
         }
 
         private void Save()
         {
             PlayerPrefs.SetInt("money",Money);
+            PlayerPrefs.SetInt("jellyCount",JellyCount);
+            PlayerPrefs.SetInt("targetClimb",TargetClimb);
+            PlayerPrefs.SetInt("climbedStairs", ClimbedStairs);
+            PlayerPrefs.SetInt("jellyLimit",JellyLimit);
+            PlayerPrefs.SetInt("boughtGrid",BoughtGrid);
+            for (int i = 0; i < JellyCount; i++)
+            {
+                PlayerPrefs.SetInt($"jelly{i}", _jellyList[i].GetLevel());
+            }
         }
 
         public void SetGrid(Transform grid, bool isOccupied)
@@ -165,6 +185,12 @@ namespace _YabuGames.Scripts.Managers
                 grid.GetComponent<BoxCollider>().enabled = true;
             }
         }
+        
+        public void RemoveJelly(JellyController jelly)
+        {
+            _jellyList.Remove(jelly);
+            JellyLimit++;
+        }
         public void AddJelly()
         {
             var temp = Instantiate(Resources.Load<GameObject>("Spawnables/Jelly"));
@@ -172,6 +198,8 @@ namespace _YabuGames.Scripts.Managers
             temp.transform.position = emptyGrids[0].position;
             script.SetIdleGrid(emptyGrids[0]);
             JellyCount++;
+            JellyLimit--;
+            _jellyList.Add(script);
         }
 
         public void ArrangeMoney(int value)

@@ -165,21 +165,7 @@ namespace _YabuGames.Scripts.Controllers
             {
                 script.TempMerge(takenLevel);
                 GameManager.Instance.ClimbedStairs += 5;
-                // if (_level >= maxLevel)  return;
-                // _ableToDrag = false;
-                // var seq = DOTween.Sequence();
-                // _onMerge = true;
-                // _level += takenLevel;
-                // _heightValue = growingSize.x * takenLevel;
-                // var mergedScale = _currentScale + (growingSize * takenLevel);
-                // var effectScale = new Vector3(mergedScale.x * 1.1f, mergedScale.y*2, mergedScale.z);
-                // _currentScale = mergedScale;
-                // seq.Append(_transform.DOMoveY(_heightValue, .3f).SetEase(Ease.InSine).SetRelative(true));
-                // seq.Join(meshParent.DOScale(effectScale, .3f).SetEase(Ease.OutBack));
-                // seq.Append(meshParent.DOScale(_currentScale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
             }
-
-            
         }
 
         public void AllyMerge( int takenLevel,IInteractable script)
@@ -206,6 +192,7 @@ namespace _YabuGames.Scripts.Controllers
 
         private void MergeDone()
         {
+            _transform.DOPlay();
             _collisionController.AllowEnemyMerging();
             var splash = Instantiate(Resources.Load<GameObject>($"Particles/splash/Splash{_level}"));
             splash.transform.position = splashPosition.position;
@@ -270,7 +257,7 @@ namespace _YabuGames.Scripts.Controllers
             }
 
             _onMove = true;
-            _ableToDrag = false;
+            _ableToDrag = true;
             _timer += coolDown;
             _stepCount++;
 
@@ -286,11 +273,10 @@ namespace _YabuGames.Scripts.Controllers
         private void OnClimbFinish()
         {
             PullParticles();
-            GameManager.Money += _level;
+            GameManager.Money += _level * 2;
             var scale = _transform.localScale;
             var desiredScale = new Vector3(scale.x / 1.1f, scale.y*1.1f, scale.z*1.1f);
             _transform.DOScale(desiredScale, .25f).SetEase(Ease.InSine).OnComplete(EnableMovement);
-
         }
 
         private void EnableMovement()
@@ -300,10 +286,10 @@ namespace _YabuGames.Scripts.Controllers
                 GetOnBand();
                  return;
             }
-            _oldPosition = _transform.position;
             _onMove = false;
             _ableToDrag = true;
             _isStarted = true;
+            _oldPosition = transform.position;
         }
         
         private void Disappear()
@@ -354,6 +340,7 @@ namespace _YabuGames.Scripts.Controllers
             }
             _currentGrid = grid;
             GameManager.Instance.SetGrid(_currentGrid,true);
+            //GameManager.Instance.JellyLimit--;
             _stepCount = 0;
             var position = grid.position;
             position += new Vector3(0, _currentScale.x, _currentScale.x/1.5f);
@@ -361,10 +348,12 @@ namespace _YabuGames.Scripts.Controllers
             _startGrid = position;
             _oldPosition = position;
             _isStarted = false;
+            //CoreGameSignals.Instance.OnSave?.Invoke();
         }
         public void SetStartGrid(Transform grid)
         {
             GameManager.Instance.SetGrid(_currentGrid,false);
+            //GameManager.Instance.JellyLimit++;
             if (_currentStartGrid)
             {
                 _currentStartGrid.GetComponent<BoxCollider>().enabled = true;
@@ -379,6 +368,7 @@ namespace _YabuGames.Scripts.Controllers
             _startGrid = position;
             _oldPosition = position;
             EnableMovement();
+            //CoreGameSignals.Instance.OnSave?.Invoke();
         }
         public void GoToPrevPosition()
         {
@@ -417,6 +407,7 @@ namespace _YabuGames.Scripts.Controllers
                 _currentStartGrid.GetComponent<BoxCollider>().enabled = true;
             }
             GameManager.Instance.JellyCount--;
+            GameManager.Instance.RemoveJelly(this);
             GameManager.Instance.SetGrid(_currentGrid,false);
             CoreGameSignals.Instance.OnSave?.Invoke();
             transform.DOKill();
@@ -427,8 +418,21 @@ namespace _YabuGames.Scripts.Controllers
             return _level;
         }
 
+        public void SetLevel(int level)
+        {
+            var seq = DOTween.Sequence();
+            var scale = _currentScale +
+                        new Vector3(growingSize.x * level, growingSize.y * level, growingSize.z * level);
+            _level = level;
+            SetMaterialAndLevel();
+            _heightValue += (growingSize.x / 2) * level;
+            transform.position += Vector3.up * _heightValue;
+            seq.Append(meshParent.DOScale(scale, .2f).SetEase(Ease.OutBack)).OnComplete(MergeDone);
+        }
+
         public bool CanDrag()
         {
+            _transform.DOPause();
             return _ableToDrag;
         }
         #endregion
